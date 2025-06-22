@@ -20,6 +20,6 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, yeah-med-fe');
+    expect(compiled.querySelector('span')?.textContent).toContain('yeah-med-fe');
   });
 });
