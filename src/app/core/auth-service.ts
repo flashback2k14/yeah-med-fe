@@ -1,7 +1,8 @@
-import { inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from './http-service';
+import { NotifyService } from '../notify/notify-service';
 
 export class StorageKeys {
   public static USER_EMAIL = 'ymed:user:email';
@@ -9,9 +10,27 @@ export class StorageKeys {
   public static USER_LOGGED_IN = 'ymed:user:logged:in';
 }
 
+export type User = {
+  userId: string;
+  email: string;
+  createdAt: Date;
+};
+
+export type LoginRequest = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  message: string;
+  user: User;
+};
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private readonly notifyService = inject(NotifyService);
   private readonly httpService = inject(HttpService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
@@ -24,36 +43,31 @@ export class AuthService {
   }
 
   public async login(email: string, password: string): Promise<void> {
-    // this.notification.show('notification.auth.login', { username });
-    // const login = btoa(`${username}:${password}`);
-    // localStorage.setItem(StorageKeys.USER_LOGIN, login);
-    // this.httpService
-    //   .get<LoginResult>('/check-user')
-    //   .pipe(takeUntilDestroyed(this.destroyRef))
-    //   .subscribe((value: LoginResult) => {
-    //     if (value.successful) {
-    //       localStorage.setItem(StorageKeys.USER_LOGGED_IN, 'true');
-    //       localStorage.setItem(StorageKeys.USER_NAME, username);
-    //       const returnUrl =
-    //         this.route.snapshot?.queryParams['returnUrl'] ?? '/dashboard';
-    //       this.router.navigateByUrl(returnUrl);
-    //     } else {
-    //       localStorage.setItem(StorageKeys.USER_LOGGED_IN, 'false');
-    //     }
-    //   });
+    this.notifyService.show('notification.auth.login', { email });
 
-    localStorage.setItem(StorageKeys.USER_LOGGED_IN, 'true');
-    localStorage.setItem(StorageKeys.USER_EMAIL, email);
+    this.httpService
+      .create<LoginRequest, LoginResponse>('/users/login', { email, password })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: LoginResponse) => {
+        if (value.message === 'Login Success') {
+          localStorage.setItem(StorageKeys.USER_LOGGED_IN, 'true');
+          localStorage.setItem(StorageKeys.USER_EMAIL, value.user.email);
+          localStorage.setItem(StorageKeys.USER_ID, value.user.userId);
 
-    const returnUrl =
-      this.route.snapshot?.queryParams['returnUrl'] ?? '/dashboard';
-    this.router.navigateByUrl(returnUrl);
+          const returnUrl =
+            this.route.snapshot?.queryParams['returnUrl'] ?? '/dashboard';
+          this.router.navigateByUrl(returnUrl);
+        } else {
+          this.notifyService.showError((value as any)?.error);
+          localStorage.setItem(StorageKeys.USER_LOGGED_IN, 'false');
+        }
+      });
   }
 
   public logout(): void {
-    // this.notification.show('notification.auth.logout', {
-    //   username: localStorage.getItem(StorageKeys.USER_NAME),
-    // });
+    this.notifyService.show('notification.auth.logout', {
+      username: localStorage.getItem(StorageKeys.USER_EMAIL),
+    });
 
     localStorage.removeItem(StorageKeys.USER_LOGGED_IN);
     localStorage.removeItem(StorageKeys.USER_EMAIL);

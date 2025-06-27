@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "title": "Yeah! Med",
+    "dashboard": "Dashboard",
+    "actions": {
+      "login": "Login",
+      "logout": "Logout"
+    }
+  },
+  "footer": {
+    "me": "Developed by flashback2k14"
+  },
+  "notification": {
+    "auth": {
+      "login": "Logging in with user {{email}}...",
+      "logout": "Logging out with user {{email}}...",
+      "redirect": "You are not logged in. Redirected."
+    },
+    "error": {
+      "default-http": "Unknown error."
+    }
+  },
+  "auth": {
+    "title": "Please enter your login credentials",
+    "email": {
+      "label": "Email",
+      "placeholder": "Please enter your email..."
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Please enter your password..."
+    },
+    "submit": "Login"
+  },
+  "dashboard": {
+    "loading": "Loading...",
+    "no-data": "No data available."
+  },
+  "settings": {
+    "information": {
+      "title": "Information",
+      "version": "App version: {{version}}",
+      "apiVersion": "API version: {{version}}",
+      "username": "Username: {{username}}"
+    }
+  }
+}
