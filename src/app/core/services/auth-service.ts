@@ -1,8 +1,8 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotifyService } from '../../shared/notify/notify-service';
 import { HttpService } from './http-service';
-import { NotifyService } from '../notify/notify-service';
 
 export class StorageKeys {
   public static USER_EMAIL = 'ymed:user:email';

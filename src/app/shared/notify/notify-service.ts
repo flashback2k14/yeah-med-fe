@@ -5,13 +5,11 @@ import {
   Injectable,
   inputBinding,
   outputBinding,
-  signal,
   Signal,
-  viewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { NotifyComponent, NotifyType } from './notify';
-import { HashMap, translateSignal, TranslocoService } from '@jsverse/transloco';
+import { HashMap, TranslocoService } from '@jsverse/transloco';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })

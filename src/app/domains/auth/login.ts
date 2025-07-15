@@ -1,7 +1,7 @@
 import { Component, inject, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../core/auth-service';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { AuthService } from '../../core/services/auth-service';
 
 @Component({
   selector: 'app-login',

@@ -7,18 +7,30 @@ import {
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { AuthService } from '../core/auth-service';
-import { NotifyService } from '../notify/notify-service';
-import { TranslocoDirective } from '@jsverse/transloco';
+
+import { NotifyService } from '../../shared/notify/notify-service';
+import { HeaderComponent } from './header';
+import { FooterComponent } from './footer';
+import { MainComponent } from './main';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.html',
-  imports: [RouterOutlet, TranslocoDirective],
+  template: `
+    <app-header />
+
+    <app-main>
+      <router-outlet />
+    </app-main>
+
+    <app-footer />
+
+    <ng-container #notify></ng-container>
+  `,
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, MainComponent],
 })
 export class App implements OnInit {
-  protected readonly authService = inject(AuthService);
   private readonly notifyService = inject(NotifyService);
+
   private vcr = viewChild('notify', { read: ViewContainerRef });
 
   ngOnInit(): void {

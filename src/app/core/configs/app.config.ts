@@ -6,13 +6,13 @@ import {
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-
-import { routes } from './app.routes';
-import { environment } from '../environments/environment.development';
-import { API_BASE_URL, APP_VERSION } from './core/tokens';
-import { errorInterceptor } from './core/error-interceptor';
-import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
+
+import { environment } from '../../../environments/environment.development';
+import { errorInterceptor } from '../interceptors/error-interceptor';
+import { TranslocoHttpLoader } from './transloco-loader';
+import { API_BASE_URL, APP_VERSION } from '../tokens';
+import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [

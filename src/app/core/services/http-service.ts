@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageKeys } from './auth-service';
-import { API_BASE_URL } from './tokens';
+import { API_BASE_URL } from '../tokens';
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {

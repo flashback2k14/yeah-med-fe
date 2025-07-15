@@ -2,6 +2,7 @@
   "nav": {
     "title": "Yeah! Med",
     "dashboard": "Dashboard",
+    "settings": "Settings",
     "actions": {
       "login": "Login",
       "logout": "Logout"
