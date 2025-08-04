@@ -1,7 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
-import { Location, NgClass } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { AuthService } from '../services/auth-service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth-service';
           class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
         >
           <a
-            href="/dashboard"
+            routerLink="/dashboard"
             class="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span
@@ -52,31 +52,25 @@ import { AuthService } from '../services/auth-service';
               @if (authService.isLoggedIn()) {
               <li>
                 <a
-                  href="/dashboard"
+                  routerLink="/dashboard"
+                  routerLinkActive="underline underline-offset-2"
                   class="block py-2 px-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
-                  <span
-                    [ngClass]="{
-                      'underline underline-offset-2': isDashboard()
-                    }"
-                    >{{ t('dashboard') }}</span
-                  >
+                  {{ t('dashboard') }}
                 </a>
               </li>
               <li>
                 <a
-                  href="/settings"
+                  routerLink="/settings"
+                  routerLinkActive="underline underline-offset-2"
                   class="block py-2 px-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
-                  <span
-                    [ngClass]="{ 'underline underline-offset-2': isSettings() }"
-                    >{{ t('settings') }}</span
-                  >
+                  {{ t('settings') }}
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  routerLink="/dashboard"
                   class="block py-2 px-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   (click)="authService.logout()"
                 >
@@ -86,7 +80,7 @@ import { AuthService } from '../services/auth-service';
               } @else {
               <li>
                 <a
-                  href="/login"
+                  routerLink="/login"
                   class="block py-2 px-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   {{ t('actions.login') }}
@@ -99,12 +93,8 @@ import { AuthService } from '../services/auth-service';
       </nav>
     </ng-container>
   `,
-  imports: [TranslocoDirective, NgClass],
+  imports: [TranslocoDirective, RouterLink, RouterLinkActive],
 })
 export class HeaderComponent {
   protected readonly authService = inject(AuthService);
-  private readonly location = inject(Location);
-
-  protected isDashboard = signal(this.location.path() === '/dashboard');
-  protected isSettings = signal(this.location.path() === '/settings');
 }

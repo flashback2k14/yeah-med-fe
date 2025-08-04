@@ -5,9 +5,9 @@ import {
   RouterStateSnapshot,
   Router,
 } from '@angular/router';
-import { NotifyService } from '../../shared/notify/notify-service';
+import { NotifyService } from '../services/notify-service';
 import { AuthService } from '../services/auth-service';
-import { NotifyType } from '../../shared/notify/notify';
+import { NotifyType } from '../../shared/components/notify';
 
 export const authGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,

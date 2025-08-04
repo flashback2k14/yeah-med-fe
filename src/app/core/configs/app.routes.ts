@@ -8,32 +8,30 @@ export const routes: Routes = [
       import('../../domains/auth/login').then((c) => c.LoginComponent),
   },
   {
-    path: '',
-    canActivateChild: [authGuard],
-    children: [
-      {
-        path: 'dashboard',
-        loadComponent: () =>
-          import('../../domains/dashboard/dashboard').then(
-            (c) => c.DashboardComponent
-          ),
-      },
-      {
-        path: 'settings',
-        loadComponent: () =>
-          import('../../domains/settings/settings').then(
-            (c) => c.SettingsComponent
-          ),
-      },
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'dashboard',
-      },
-      {
-        path: '**',
-        redirectTo: 'dashboard',
-      },
-    ],
+    path: 'dashboard',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('../../domains/dashboard/dashboard').then(
+        (c) => c.DashboardComponent
+      ),
+  },
+  {
+    path: 'settings',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('../../domains/settings/settings').then(
+        (c) => c.SettingsComponent
+      ),
+  },
+  {
+    path: '404',
+    loadComponent: () =>
+      import('../../shared/components/404-error').then(
+        (c) => c.FourZeroFourErrorComponent
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: '404',
   },
 ];

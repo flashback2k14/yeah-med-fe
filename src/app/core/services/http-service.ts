@@ -23,12 +23,9 @@ export class HttpService {
     });
   }
 
-  private update<TData>(route: string, data: TData): Observable<TData>;
-  private update<TData, TReturn>(
-    route: string,
-    data: TData
-  ): Observable<TReturn>;
-  private update(route: string, data: unknown) {
+  update<TData>(route: string, data: TData): Observable<TData>;
+  update<TData, TReturn>(route: string, data: TData): Observable<TReturn>;
+  update(route: string, data: unknown) {
     return this.http.put(`${this.baseUrl}${route}`, data, {
       headers: this._getHeadersWithUser(),
     });
@@ -45,7 +42,7 @@ export class HttpService {
     });
   }
 
-  private delete<TReturn>(route: string, data?: unknown): Observable<TReturn> {
+  delete<TReturn>(route: string, data?: unknown): Observable<TReturn> {
     return this.http.delete<TReturn>(`${this.baseUrl}${route}`, {
       body: data,
       headers: this._getHeadersWithUser(),

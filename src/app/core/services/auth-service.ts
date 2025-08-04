@@ -1,7 +1,7 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotifyService } from '../../shared/notify/notify-service';
+import { NotifyService } from './notify-service';
 import { HttpService } from './http-service';
 
 export class StorageKeys {

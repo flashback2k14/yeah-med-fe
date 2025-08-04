@@ -35,7 +35,11 @@
   },
   "dashboard": {
     "loading": "Loading...",
-    "no-data": "No data available."
+    "no-data": "No data available.",
+    "table": {
+      "added": "New medication added.",
+      "deleted": "Medication successfully deleted."
+    }
   },
   "settings": {
     "information": {
@@ -44,5 +48,11 @@
       "apiVersion": "API version: {{version}}",
       "username": "Username: {{username}}"
     }
+  },
+  "404": {
+    "title": "404",
+    "line1": "Something's missing.",
+    "line2": "Sorry, we can't find that page.",
+    "button": "Back to Dashboard"
   }
 }

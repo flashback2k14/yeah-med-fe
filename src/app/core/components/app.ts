@@ -8,7 +8,7 @@ import {
 import { RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 
-import { NotifyService } from '../../shared/notify/notify-service';
+import { NotifyService } from '../services/notify-service';
 import { HeaderComponent } from './header';
 import { FooterComponent } from './footer';
 import { MainComponent } from './main';
