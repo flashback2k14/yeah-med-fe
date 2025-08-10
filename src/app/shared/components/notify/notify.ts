@@ -1,20 +1,17 @@
 import { Component, input, output } from '@angular/core';
 
 @Component({
-  selector: 'app-notify',
+  selector: 'ym-notify',
   template: `
     <div
       id="toast-bottom-left"
-      class="fixed flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x rtl:divide-x-reverse divide-gray-200 rounded-lg shadow-sm right-5 bottom-20 dark:text-gray-400 dark:divide-gray-700 dark:bg-gray-800"
+      class="container"
       role="alert"
       (click)="click.emit()"
     >
       @switch (type()) { @case (NotifyType.SUCCESS) {
-      <div
-        class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200"
-      >
+      <div class="base success">
         <svg
-          class="w-5 h-5"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -27,11 +24,8 @@ import { Component, input, output } from '@angular/core';
         <span class="sr-only">Check icon</span>
       </div>
       } @case (NotifyType.ERROR) {
-      <div
-        class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200"
-      >
+      <div class="base error">
         <svg
-          class="w-5 h-5"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -44,11 +38,8 @@ import { Component, input, output } from '@angular/core';
         <span class="sr-only">Error icon</span>
       </div>
       } @case (NotifyType.WARNING) {
-      <div
-        class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200"
-      >
+      <div class="base warning">
         <svg
-          class="w-5 h-5"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -61,9 +52,10 @@ import { Component, input, output } from '@angular/core';
         <span class="sr-only">Warning icon</span>
       </div>
       } }
-      <div class="text-sm font-normal">{{ text() }}</div>
+      <div class="text">{{ text() }}</div>
     </div>
   `,
+  styleUrl: './notify.scss',
 })
 export class NotifyComponent {
   protected text = input<string>('');

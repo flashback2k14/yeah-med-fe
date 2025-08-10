@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('../../domains/auth/login').then((c) => c.LoginComponent),
+      import('../../domains/auth/login/login').then((c) => c.LoginComponent),
   },
   {
     path: 'dashboard',
@@ -26,7 +26,7 @@ export const routes: Routes = [
   {
     path: '404',
     loadComponent: () =>
-      import('../../shared/components/404-error').then(
+      import('../../shared/components/error/404-error').then(
         (c) => c.FourZeroFourErrorComponent
       ),
   },

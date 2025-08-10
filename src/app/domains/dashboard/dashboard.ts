@@ -1,52 +1,57 @@
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { MatButtonModule } from '@angular/material/button';
+
 import { DashboardTableComponent } from './table/dashboard-table';
 import { TableRow, TableRowRequest } from './models';
 import { HttpService } from '../../core/services/http-service';
-import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { NotifyService } from '../../core/services/notify-service';
 import { ShowModal } from './modals/show-modal';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'ym-dashboard',
   template: `
     <ng-container *transloco="let t; prefix: 'dashboard'">
-      <app-dashboard-table
-        [rows]="rows()"
-        (add)="handleAdd()"
-        (show)="handleShow($event)"
-        (edit)="handleEdit($event)"
-        (delete)="handleDelete($event)"
-      />
+      <div class="container">
+        <ym-dashboard-table
+          [rows]="dataRef.value()"
+          (add)="handleAdd()"
+          (show)="handleShow($event)"
+          (edit)="handleEdit($event)"
+          (delete)="handleDelete($event)"
+        />
 
-      @if(hasNoData()) {
-      <h2
-        class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
-      >
-        {{ t('no-data') }}
-      </h2>
-      }
+        @if (dataRef.isLoading()) {
+        <h2>
+          {{ t('loading') }}
+        </h2>
+        }
 
-      <app-show-modal
+        <!-- <app-show-modal
         [open]="openShowModal()"
         [selectedRow]="selectedRow()"
         (close)="this.openShowModal.set(false)"
-      />
+      /> -->
+      </div>
     </ng-container>
   `,
-  imports: [TranslocoDirective, DashboardTableComponent, ShowModal],
+  styleUrl: './dashboard.scss',
+  imports: [
+    TranslocoDirective,
+    MatButtonModule,
+    DashboardTableComponent,
+    // ShowModal,
+  ],
 })
 export class DashboardComponent {
   private readonly notifyService = inject(NotifyService);
   private readonly httpService = inject(HttpService);
 
-  private rowsRef = rxResource({
+  protected dataRef = rxResource({
     stream: () => this.httpService.get<TableRow[]>('/meds'),
     defaultValue: [],
   });
-
-  protected rows = this.rowsRef.value;
-  protected hasNoData = computed(() => this.rows().length === 0);
 
   protected selectedRow = signal<TableRow | undefined>(undefined);
   protected openShowModal = signal<boolean>(false);
@@ -62,7 +67,7 @@ export class DashboardComponent {
     } as TableRowRequest;
     this.httpService.create<TableRowRequest>('/meds', data).subscribe(() => {
       this.notifyService.show('dashboard.table.added');
-      this.rowsRef.reload();
+      this.dataRef.reload();
     });
   }
 
@@ -80,7 +85,7 @@ export class DashboardComponent {
 
     this.httpService.delete(`/meds/${row.id}`).subscribe(() => {
       this.notifyService.show('dashboard.table.deleted');
-      this.rowsRef.reload();
+      this.dataRef.reload();
     });
   }
 }

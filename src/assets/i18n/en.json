@@ -38,7 +38,11 @@
     "no-data": "No data available.",
     "table": {
       "added": "New medication added.",
-      "deleted": "Medication successfully deleted."
+      "deleted": "Medication successfully deleted.",
+      "filter": {
+        "label": "Filter by name",
+        "placeholder": "Please enter the name of the medication..."
+      }
     }
   },
   "settings": {

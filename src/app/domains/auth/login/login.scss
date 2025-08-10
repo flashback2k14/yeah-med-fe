@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: center;
+
+  mat-card {
+    --mat-card-elevated-container-color: var(--mat-sys-background);
+    max-width: 60vw;
+    padding: 1rem;
+    box-shadow: var(--mat-sys-level3);
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

@@ -6,26 +6,28 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { initFlowbite } from 'flowbite';
 
-import { NotifyService } from '../services/notify-service';
-import { HeaderComponent } from './header';
-import { FooterComponent } from './footer';
-import { MainComponent } from './main';
+import { NotifyService } from '../../services/notify-service';
+import { HeaderComponent } from '../header/header';
+import { FooterComponent } from '../footer/footer';
+import { MainComponent } from '../main/main';
 
 @Component({
-  selector: 'app-root',
+  selector: 'ym-root',
   template: `
-    <app-header />
+    <div class="container">
+      <ym-header />
 
-    <app-main>
-      <router-outlet />
-    </app-main>
+      <ym-main>
+        <router-outlet />
+      </ym-main>
 
-    <app-footer />
+      <ym-footer />
 
-    <ng-container #notify></ng-container>
+      <ng-container #notify></ng-container>
+    </div>
   `,
+  styleUrl: './app.scss',
   imports: [RouterOutlet, HeaderComponent, FooterComponent, MainComponent],
 })
 export class App implements OnInit {
@@ -34,7 +36,6 @@ export class App implements OnInit {
   private vcr = viewChild('notify', { read: ViewContainerRef });
 
   ngOnInit(): void {
-    initFlowbite();
     this.notifyService.init(this.vcr);
   }
 }

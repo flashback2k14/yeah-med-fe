@@ -1,0 +1,29 @@
+.container {
+  padding: 16px;
+
+  .mat-toolbar {
+    --mat-toolbar-container-background-color: var(--mat-sys-primary-fixed);
+    --mat-toolbar-container-text-color: var(--mat-sys-on-secondary-fixed);
+    border-radius: 8px;
+    box-shadow: var(--mat-sys-level3);
+  }
+
+  .title {
+    cursor: pointer;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  a {
+    text-decoration: none;
+    padding-right: 8px;
+    color: var(--mat-sys-on-secondary-fixed);
+    font: var(--mat-sys-body-large);
+  }
+
+  .underline {
+    text-decoration: underline;
+  }
+}

@@ -8,7 +8,10 @@ import {
   Signal,
   ViewContainerRef,
 } from '@angular/core';
-import { NotifyComponent, NotifyType } from '../../shared/components/notify';
+import {
+  NotifyComponent,
+  NotifyType,
+} from '../../shared/components/notify/notify';
 import { HashMap, TranslocoService } from '@jsverse/transloco';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

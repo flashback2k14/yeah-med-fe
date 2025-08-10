@@ -8,7 +8,7 @@
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "ym",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -23,7 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/custom-theme.scss",
+              "src/styles/tokens.scss"
             ]
           },
           "configurations": {
@@ -83,7 +84,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/custom-theme.scss",
+              "src/styles/tokens.scss"
             ]
           }
         }

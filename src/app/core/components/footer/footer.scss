@@ -1,0 +1,44 @@
+.container {
+  padding: 16px;
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: var(--mat-sys-background);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: var(--mat-sys-level3);
+
+    a {
+      margin-left: 6px;
+    }
+
+    .footer-anchor {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      outline: none;
+    }
+    .footer-anchor:hover,
+    .footer-anchor:focus {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .footer-anchor:visited {
+      color: white;
+    }
+    .footer-anchor span {
+      font-size: small;
+      margin-left: 8px;
+    }
+    .footer-icon {
+      margin-left: 8px;
+      margin-right: 8px;
+    }
+    a svg {
+      color: white;
+    }
+  }
+}
