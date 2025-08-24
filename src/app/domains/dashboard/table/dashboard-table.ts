@@ -33,11 +33,7 @@ import { TableRow } from '../models';
           <!-- Name Column -->
           <ng-container matColumnDef="name" sticky>
             <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td
-              mat-cell
-              *matCellDef="let element"
-              (click)="handleShow(element)"
-            >
+            <td mat-cell *matCellDef="let element">
               {{ element.name }}
             </td>
           </ng-container>
@@ -65,10 +61,14 @@ import { TableRow } from '../models';
           <!-- Action Column -->
           <ng-container matColumnDef="actions" stickyEnd>
             <th mat-header-cell *matHeaderCellDef aria-label="row actions">
-              <mat-icon (click)="handleAdd()">add</mat-icon>
+              <div class="action-header" (click)="handleAdd()">
+                <span>New</span>
+                <mat-icon>add</mat-icon>
+              </div>
             </th>
             <td mat-cell *matCellDef="let element">
               <div class="action-cell">
+                <mat-icon (click)="handleShow(element)">info</mat-icon>
                 <mat-icon (click)="handleEdit(element)">edit</mat-icon>
                 <mat-icon (click)="handleDelete(element)">delete</mat-icon>
               </div>

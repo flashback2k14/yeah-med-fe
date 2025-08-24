@@ -38,10 +38,93 @@
     "no-data": "No data available.",
     "table": {
       "added": "New medication added.",
+      "edit": "Medication successfully edited.",
       "deleted": "Medication successfully deleted.",
       "filter": {
         "label": "Filter by name",
         "placeholder": "Please enter the name of the medication..."
+      }
+    },
+    "add-modal": {
+      "title": "Add new medication",
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter name..."
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter description..."
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Enter location..."
+      },
+      "category": {
+        "label": "Category",
+        "placeholder": "Enter category..."
+      },
+      "expiredAt": {
+        "label": "Expired at",
+        "placeholder": "Enter expiration date..."
+      },
+      "productId": {
+        "label": "Product number",
+        "placeholder": "Enter product number..."
+      },
+      "actions": {
+        "close": "Close",
+        "save": "Save"
+      }
+    },
+    "edit-modal": {
+      "title": "Edit medication",
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter name..."
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter description..."
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Enter location..."
+      },
+      "category": {
+        "label": "Category",
+        "placeholder": "Enter category..."
+      },
+      "expiredAt": {
+        "label": "Expired at",
+        "placeholder": "Enter expiration date..."
+      },
+      "productId": {
+        "label": "Product number",
+        "placeholder": "Enter product number..."
+      },
+      "actions": {
+        "close": "Close",
+        "save": "Edit"
+      }
+    },
+    "delete-modal": {
+      "title": "Are you sure to delete the medication?",
+      "actions": {
+        "no": "No",
+        "yes": "Yes"
+      }
+    },
+    "show-modal": {
+      "title": "Medication",
+      "labels": {
+        "name": "Name",
+        "desc": "Description",
+        "catLoc": "Category / Location",
+        "expiredAt": "Expired at",
+        "productId": "Product number"
+      },
+      "actions": {
+        "close": "Close"
       }
     }
   },

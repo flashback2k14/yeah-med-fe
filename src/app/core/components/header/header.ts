@@ -26,9 +26,9 @@ import { AuthService } from '../../services/auth-service';
             {{ t('dashboard') }}
           </a>
 
-          <a routerLink="/settings" routerLinkActive="underline">
+          <!-- <a routerLink="/settings" routerLinkActive="underline">
             {{ t('settings') }}
-          </a>
+          </a> -->
 
           <a routerLink="/dashboard" (click)="authService.logout()">
             {{ t('actions.logout') }}
