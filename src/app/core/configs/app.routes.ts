@@ -31,6 +31,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'dashboard',
+  },
+  {
     path: '**',
     redirectTo: '404',
   },

@@ -12,7 +12,7 @@ import {
 } from '@angular/material/core';
 import { provideTransloco } from '@jsverse/transloco';
 
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { errorInterceptor } from '../interceptors/error-interceptor';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { API_BASE_URL, APP_VERSION } from '../tokens';

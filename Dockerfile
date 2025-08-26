@@ -10,7 +10,7 @@ RUN npm ci --legacy-peer-deps
 # 2) Build
 COPY . .
 # Build in prod mode; add --output-path if you use a custom dist dir
-RUN npm run build -- --configuration production
+RUN npm run build
 
 # ---------- Stage 2: Runtime (Nginx, non-root) ----------
 FROM nginx:1.27-alpine AS runtime
