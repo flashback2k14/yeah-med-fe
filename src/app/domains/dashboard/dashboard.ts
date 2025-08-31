@@ -78,7 +78,7 @@ export class DashboardComponent {
   protected handleEdit(row: TableRow): void {
     this.dialog
       .open(EditModal, {
-        data: row,
+        data: JSON.parse(JSON.stringify(row)),
         width: '40%',
         hasBackdrop: true,
       })

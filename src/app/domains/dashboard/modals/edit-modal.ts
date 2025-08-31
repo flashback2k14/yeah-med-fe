@@ -33,16 +33,6 @@ import { TableRow } from '../models';
             />
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full">
-            <mat-label>{{ t('description.label') }}</mat-label>
-            <textarea
-              matInput
-              name="description"
-              [placeholder]="t('description.placeholder')"
-              [(ngModel)]="selectedRow.description"
-            ></textarea>
-          </mat-form-field>
-
           <mat-form-field appearance="outline" class="half">
             <mat-label>{{ t('location.label') }}</mat-label>
             <input
@@ -82,6 +72,16 @@ import { TableRow } from '../models';
               [for]="picker"
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>{{ t('description.label') }}</mat-label>
+            <textarea
+              matInput
+              name="description"
+              [placeholder]="t('description.placeholder')"
+              [(ngModel)]="selectedRow.description"
+            ></textarea>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full">

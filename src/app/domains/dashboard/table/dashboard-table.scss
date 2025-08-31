@@ -21,6 +21,11 @@ mat-form-field {
       background: var(--mat-sys-secondary);
       color: var(--mat-sys-background);
     }
+
+    &.expired:hover {
+      background-color: var(--mat-sys-error);
+      color: var(--mat-sys-background);
+    }
   }
 
   .action-header {
@@ -34,9 +39,21 @@ mat-form-field {
     }
   }
 
+  .first-column {
+    width: 25%;
+  }
+
+  .last-column {
+    width: 150px;
+  }
+
   .action-cell {
     display: flex;
     justify-content: space-between;
+  }
+
+  .expired {
+    color: var(--mat-sys-error);
   }
 
   mat-icon {

@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
 
 import { TableRow } from '../models';
+import { IsExpiredPipe } from '../pipes/table-pipes';
 
 @Component({
   selector: 'ym-dashboard-table',
@@ -32,7 +33,7 @@ import { TableRow } from '../models';
         <table mat-table [dataSource]="this.filteredRows()">
           <!-- Name Column -->
           <ng-container matColumnDef="name" sticky>
-            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <th mat-header-cell *matHeaderCellDef class="first-column">Name</th>
             <td mat-cell *matCellDef="let element">
               {{ element.name }}
             </td>
@@ -60,7 +61,12 @@ import { TableRow } from '../models';
 
           <!-- Action Column -->
           <ng-container matColumnDef="actions" stickyEnd>
-            <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              aria-label="row actions"
+              class="last-column"
+            >
               <div class="action-header" (click)="handleAdd()">
                 <span>New</span>
                 <mat-icon>add</mat-icon>
@@ -86,7 +92,11 @@ import { TableRow } from '../models';
             *matHeaderRowDef="displayedColumns; sticky: true"
             class="no-hover"
           ></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-row
+            [class.expired]="row.expiredAt | isExpired"
+            *matRowDef="let row; columns: displayedColumns"
+          ></tr>
         </table>
       </div>
     </ng-container>
@@ -101,6 +111,7 @@ import { TableRow } from '../models';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
+    IsExpiredPipe,
   ],
 })
 export class DashboardTableComponent {

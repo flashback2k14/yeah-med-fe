@@ -28,16 +28,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
             />
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full">
-            <mat-label>{{ t('description.label') }}</mat-label>
-            <textarea
-              matInput
-              name="description"
-              [placeholder]="t('description.placeholder')"
-              ngModel
-            ></textarea>
-          </mat-form-field>
-
           <mat-form-field appearance="outline" class="half">
             <mat-label>{{ t('location.label') }}</mat-label>
             <input
@@ -77,6 +67,16 @@ import { TranslocoDirective } from '@jsverse/transloco';
               [for]="picker"
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>{{ t('description.label') }}</mat-label>
+            <textarea
+              matInput
+              name="description"
+              [placeholder]="t('description.placeholder')"
+              ngModel
+            ></textarea>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full">
