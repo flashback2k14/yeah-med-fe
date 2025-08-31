@@ -12,6 +12,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
 
 import { TableRow } from '../models';
 import { IsExpiredPipe } from '../pipes/table-pipes';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'ym-dashboard-table',
@@ -42,13 +43,17 @@ import { IsExpiredPipe } from '../pipes/table-pipes';
           <!-- Category Column -->
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+            <td mat-cell *matCellDef="let element">
+              <mat-chip>{{ element.category }}</mat-chip>
+            </td>
           </ng-container>
 
           <!-- Location Column -->
           <ng-container matColumnDef="location">
             <th mat-header-cell *matHeaderCellDef>Location</th>
-            <td mat-cell *matCellDef="let element">{{ element.location }}</td>
+            <td mat-cell *matCellDef="let element">
+              <mat-chip>{{ element.location }}</mat-chip>
+            </td>
           </ng-container>
 
           <!-- Expired At Column -->
@@ -105,17 +110,19 @@ import { IsExpiredPipe } from '../pipes/table-pipes';
   imports: [
     DatePipe,
     FormsModule,
-    TranslocoDirective,
-    MatButtonModule,
-    MatIconModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
     IsExpiredPipe,
+    MatButtonModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatTableModule,
+    TranslocoDirective,
   ],
 })
 export class DashboardTableComponent {
   rows = input.required<TableRow[]>();
+
   filter = model<string>();
   filteredRows = computed(() => {
     const filter = this.filter();

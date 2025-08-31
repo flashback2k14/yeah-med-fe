@@ -1,3 +1,7 @@
+:host {
+  --mat-chip-outline-color: var(--mat-sys-secondary);
+}
+
 mat-form-field {
   margin-top: 0.5rem;
   width: 50%;
@@ -20,11 +24,15 @@ mat-form-field {
     &:not(.no-hover):hover {
       background: var(--mat-sys-secondary);
       color: var(--mat-sys-background);
+      --mat-chip-label-text-color: var(--mat-sys-background);
+      --mat-chip-outline-color: var(--mat-sys-background);
     }
 
     &.expired:hover {
       background-color: var(--mat-sys-error);
       color: var(--mat-sys-background);
+      --mat-chip-label-text-color: var(--mat-sys-background);
+      --mat-chip-outline-color: var(--mat-sys-background);
     }
   }
 
@@ -54,6 +62,7 @@ mat-form-field {
 
   .expired {
     color: var(--mat-sys-error);
+    --mat-chip-outline-color: var(--mat-sys-error);
   }
 
   mat-icon {

@@ -33,6 +33,23 @@ import { TableRow } from '../models';
             />
           </mat-form-field>
 
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>{{ t('expiredAt.label') }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [placeholder]="t('expiredAt.placeholder')"
+              required=""
+              name="expiredAt"
+              [(ngModel)]="selectedRow.expiredAt"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
           <mat-form-field appearance="outline" class="half">
             <mat-label>{{ t('location.label') }}</mat-label>
             <input
@@ -55,23 +72,6 @@ import { TableRow } from '../models';
               name="category"
               [(ngModel)]="selectedRow.category"
             />
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full">
-            <mat-label>{{ t('expiredAt.label') }}</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              [placeholder]="t('expiredAt.placeholder')"
-              required=""
-              name="expiredAt"
-              [(ngModel)]="selectedRow.expiredAt"
-            />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full">

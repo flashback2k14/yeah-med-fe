@@ -1,12 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
+
+import { AutocompleteComponent } from '../../../shared/components/autocomplete/autocomplete';
 
 @Component({
   selector: 'ym-add-modal',
@@ -28,30 +35,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
             />
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="half">
-            <mat-label>{{ t('location.label') }}</mat-label>
-            <input
-              matInput
-              type="text"
-              [placeholder]="t('location.placeholder')"
-              required=""
-              name="location"
-              ngModel
-            />
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="half spacer">
-            <mat-label>{{ t('category.label') }}</mat-label>
-            <input
-              matInput
-              type="text"
-              [placeholder]="t('category.placeholder')"
-              required=""
-              name="category"
-              ngModel
-            />
-          </mat-form-field>
-
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('expiredAt.label') }}</mat-label>
             <input
@@ -68,6 +51,22 @@ import { TranslocoDirective } from '@jsverse/transloco';
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
+
+          <ym-autocomplete
+            class="half"
+            [all]="deps.categories"
+            (selected)="handleCategory($event)"
+            labelKey="dashboard.add-modal.category.label"
+            placeholderKey="dashboard.add-modal.category.placeholder"
+          />
+
+          <ym-autocomplete
+            class="half spacer"
+            [all]="deps.locations"
+            (selected)="handleLocation($event)"
+            labelKey="dashboard.add-modal.location.label"
+            placeholderKey="dashboard.add-modal.location.placeholder"
+          />
 
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('description.label') }}</mat-label>
@@ -126,14 +125,42 @@ import { TranslocoDirective } from '@jsverse/transloco';
     MatDialogModule,
     MatButtonModule,
     MatDatepickerModule,
+    AutocompleteComponent,
   ],
 })
 export class AddModal {
-  private readonly dialogRef = inject(MatDialogRef<AddModal>);
+  protected readonly dialogRef = inject(MatDialogRef<AddModal>);
+  protected readonly deps = inject<{
+    categories: string[];
+    locations: string[];
+  }>(MAT_DIALOG_DATA);
+
+  private selectedCategories = signal<string[]>([]);
+  private selectedLocations = signal<string[]>([]);
+
+  handleCategory(categories: string[]) {
+    this.selectedCategories.set(categories);
+  }
+
+  handleLocation(locations: string[]) {
+    this.selectedLocations.set(locations);
+  }
 
   onSubmit(f: NgForm) {
+    if (
+      this.selectedCategories().length === 0 ||
+      this.selectedLocations().length === 0
+    ) {
+      return;
+    }
+
+    // TODO: change Backend to handle multi categories and locations
     if (f.valid) {
-      this.dialogRef.close(f.value);
+      this.dialogRef.close({
+        ...f.value,
+        category: this.selectedCategories()[0],
+        location: this.selectedLocations()[0],
+      });
     }
   }
 }

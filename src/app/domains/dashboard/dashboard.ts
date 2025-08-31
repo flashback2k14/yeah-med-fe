@@ -49,9 +49,26 @@ export class DashboardComponent {
     defaultValue: [],
   });
 
+  protected categoriesRef = rxResource({
+    stream: () => this.httpService.get<string[]>('/meds/categories'),
+    defaultValue: [],
+  });
+
+  protected locationsRef = rxResource({
+    stream: () => this.httpService.get<string[]>('/meds/locations'),
+    defaultValue: [],
+  });
+
   protected handleAdd(): void {
     this.dialog
-      .open(AddModal, { width: '40%', hasBackdrop: true })
+      .open(AddModal, {
+        data: {
+          categories: this.categoriesRef.value(),
+          locations: this.locationsRef.value(),
+        },
+        width: '40%',
+        hasBackdrop: true,
+      })
       .afterClosed()
       .subscribe((result: TableRowRequest) => {
         if (!result) {
