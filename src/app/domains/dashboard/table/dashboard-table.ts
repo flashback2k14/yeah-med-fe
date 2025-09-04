@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
 
 import { TableRow } from '../models';
-import { IsExpiredPipe } from '../pipes/table-pipes';
+import { IsExpiredPipe, SplitPipe } from '../pipes/table-pipes';
 import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
@@ -44,7 +44,11 @@ import { MatChipsModule } from '@angular/material/chips';
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Category</th>
             <td mat-cell *matCellDef="let element">
-              <mat-chip>{{ element.category }}</mat-chip>
+              <mat-chip-set>
+                @for(category of element.category | split; track category) {
+                <mat-chip>{{ category }}</mat-chip>
+                }
+              </mat-chip-set>
             </td>
           </ng-container>
 
@@ -52,7 +56,11 @@ import { MatChipsModule } from '@angular/material/chips';
           <ng-container matColumnDef="location">
             <th mat-header-cell *matHeaderCellDef>Location</th>
             <td mat-cell *matCellDef="let element">
-              <mat-chip>{{ element.location }}</mat-chip>
+              <mat-chip-set>
+                @for(location of element.location | split; track location) {
+                <mat-chip>{{ location }}</mat-chip>
+                }
+              </mat-chip-set>
             </td>
           </ng-container>
 
@@ -117,6 +125,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatIconModule,
     MatInputModule,
     MatTableModule,
+    SplitPipe,
     TranslocoDirective,
   ],
 })

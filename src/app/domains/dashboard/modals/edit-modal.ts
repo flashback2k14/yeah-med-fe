@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { TableRow } from '../models';
+import { AutocompleteComponent } from '../../../shared/components/autocomplete/autocomplete';
 
 @Component({
   selector: 'ym-edit-modal',
@@ -28,7 +29,7 @@ import { TableRow } from '../models';
               [placeholder]="t('name.placeholder')"
               required=""
               name="name"
-              [(ngModel)]="selectedRow.name"
+              [(ngModel)]="deps.selectedRow.name"
               autofocus
             />
           </mat-form-field>
@@ -41,7 +42,7 @@ import { TableRow } from '../models';
               [placeholder]="t('expiredAt.placeholder')"
               required=""
               name="expiredAt"
-              [(ngModel)]="selectedRow.expiredAt"
+              [(ngModel)]="deps.selectedRow.expiredAt"
             />
             <mat-datepicker-toggle
               matIconSuffix
@@ -50,29 +51,21 @@ import { TableRow } from '../models';
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="half">
-            <mat-label>{{ t('location.label') }}</mat-label>
-            <input
-              matInput
-              type="text"
-              [placeholder]="t('location.placeholder')"
-              required=""
-              name="location"
-              [(ngModel)]="selectedRow.location"
-            />
-          </mat-form-field>
+          <ym-autocomplete
+            class="half"
+            [all]="deps.categories"
+            [(selectedEntries)]="selectedCategories"
+            labelKey="dashboard.add-modal.category.label"
+            placeholderKey="dashboard.add-modal.category.placeholder"
+          />
 
-          <mat-form-field appearance="outline" class="half spacer">
-            <mat-label>{{ t('category.label') }}</mat-label>
-            <input
-              matInput
-              type="text"
-              [placeholder]="t('category.placeholder')"
-              required=""
-              name="category"
-              [(ngModel)]="selectedRow.category"
-            />
-          </mat-form-field>
+          <ym-autocomplete
+            class="half spacer"
+            [all]="deps.locations"
+            [(selectedEntries)]="selectedLocations"
+            labelKey="dashboard.add-modal.location.label"
+            placeholderKey="dashboard.add-modal.location.placeholder"
+          />
 
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('description.label') }}</mat-label>
@@ -80,7 +73,7 @@ import { TableRow } from '../models';
               matInput
               name="description"
               [placeholder]="t('description.placeholder')"
-              [(ngModel)]="selectedRow.description"
+              [(ngModel)]="deps.selectedRow.description"
             ></textarea>
           </mat-form-field>
 
@@ -91,7 +84,7 @@ import { TableRow } from '../models';
               type="text"
               [placeholder]="t('productId.placeholder')"
               name="productId"
-              [(ngModel)]="selectedRow.productId"
+              [(ngModel)]="deps.selectedRow.productId"
             />
           </mat-form-field>
         </mat-dialog-content>
@@ -123,23 +116,48 @@ import { TableRow } from '../models';
     }
   `,
   imports: [
+    AutocompleteComponent,
     FormsModule,
-    TranslocoDirective,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatDatepickerModule,
+    TranslocoDirective,
   ],
 })
 export class EditModal {
-  private readonly dialogRef = inject(MatDialogRef<EditModal>);
-  selectedRow = inject<TableRow>(MAT_DIALOG_DATA);
+  protected readonly dialogRef = inject(MatDialogRef<EditModal>);
+  protected readonly deps = inject<{
+    selectedRow: TableRow;
+    categories: string[];
+    locations: string[];
+  }>(MAT_DIALOG_DATA);
+
+  protected selectedCategories = signal<string[]>(
+    this.deps.selectedRow.category.split(',')
+  );
+
+  protected selectedLocations = signal<string[]>(
+    this.deps.selectedRow.location.split(',')
+  );
 
   onSubmit(f: NgForm) {
+    if (
+      this.selectedCategories().length === 0 ||
+      this.selectedLocations().length === 0
+    ) {
+      return;
+    }
+
+    // TODO: change Backend to handle multi categories and locations
     if (f.valid) {
-      this.dialogRef.close(f.value);
+      this.dialogRef.close({
+        ...f.value,
+        category: this.selectedCategories().join(','),
+        location: this.selectedLocations().join(','),
+      });
     }
   }
 }

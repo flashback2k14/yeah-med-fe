@@ -76,11 +76,10 @@ export class AutocompleteComponent {
   readonly labelKey = input('');
   readonly placeholderKey = input('');
   readonly all = model<string[]>([]);
+  readonly selectedEntries = model<string[]>([]);
   readonly selected = output<string[]>();
 
   readonly currentInput = signal('');
-  readonly selectedEntries = signal<string[]>([]);
-
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   readonly filteredInput = computed(() => {

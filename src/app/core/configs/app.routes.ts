@@ -15,14 +15,14 @@ export const routes: Routes = [
         (c) => c.DashboardComponent
       ),
   },
-  // {
-  //   path: 'settings',
-  //   canActivate: [authGuard],
-  //   loadComponent: () =>
-  //     import('../../domains/settings/settings').then(
-  //       (c) => c.SettingsComponent
-  //     ),
-  // },
+  {
+    path: 'settings',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('../../domains/settings/settings').then(
+        (c) => c.SettingsComponent
+      ),
+  },
   {
     path: '404',
     loadComponent: () =>

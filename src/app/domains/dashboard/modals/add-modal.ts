@@ -55,7 +55,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
           <ym-autocomplete
             class="half"
             [all]="deps.categories"
-            (selected)="handleCategory($event)"
+            [(selectedEntries)]="selectedCategories"
             labelKey="dashboard.add-modal.category.label"
             placeholderKey="dashboard.add-modal.category.placeholder"
           />
@@ -63,7 +63,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
           <ym-autocomplete
             class="half spacer"
             [all]="deps.locations"
-            (selected)="handleLocation($event)"
+            [(selectedEntries)]="selectedLocations"
             labelKey="dashboard.add-modal.location.label"
             placeholderKey="dashboard.add-modal.location.placeholder"
           />
@@ -135,16 +135,8 @@ export class AddModal {
     locations: string[];
   }>(MAT_DIALOG_DATA);
 
-  private selectedCategories = signal<string[]>([]);
-  private selectedLocations = signal<string[]>([]);
-
-  handleCategory(categories: string[]) {
-    this.selectedCategories.set(categories);
-  }
-
-  handleLocation(locations: string[]) {
-    this.selectedLocations.set(locations);
-  }
+  protected selectedCategories = signal<string[]>([]);
+  protected selectedLocations = signal<string[]>([]);
 
   onSubmit(f: NgForm) {
     if (
@@ -158,8 +150,8 @@ export class AddModal {
     if (f.valid) {
       this.dialogRef.close({
         ...f.value,
-        category: this.selectedCategories()[0],
-        location: this.selectedLocations()[0],
+        category: this.selectedCategories().join(','),
+        location: this.selectedLocations().join(','),
       });
     }
   }

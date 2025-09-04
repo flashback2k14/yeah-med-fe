@@ -95,7 +95,11 @@ export class DashboardComponent {
   protected handleEdit(row: TableRow): void {
     this.dialog
       .open(EditModal, {
-        data: JSON.parse(JSON.stringify(row)),
+        data: {
+          selectedRow: JSON.parse(JSON.stringify(row)),
+          categories: this.categoriesRef.value(),
+          locations: this.locationsRef.value(),
+        },
         width: '40%',
         hasBackdrop: true,
       })
