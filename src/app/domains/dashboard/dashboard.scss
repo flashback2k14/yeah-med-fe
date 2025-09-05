@@ -3,4 +3,9 @@
   padding: 0 1rem;
   border-radius: 0.5rem;
   box-shadow: var(--mat-sys-level3);
+
+  @media screen and (max-width: 959px) {
+    border-radius: unset;
+    box-shadow: unset;
+  }
 }

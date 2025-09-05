@@ -105,10 +105,18 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
 
     .half {
       width: 49%;
+      
+      @media screen and (max-width: 959px) {
+        width: 100%;
+      }
     }
 
     .spacer {
       margin-left: 8px;
+
+      @media screen and (max-width: 959px) {
+        margin-left: unset;
+      }
     }
 
     .full {

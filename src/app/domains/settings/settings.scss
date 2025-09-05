@@ -4,16 +4,16 @@
   border-radius: 0.5rem;
   box-shadow: var(--mat-sys-level3);
 
-  .title {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.25;
+  @media screen and (max-width: 959px) {
+    border-radius: unset;
+    box-shadow: unset;
+  }
 
-    @media (min-width: 768px) {
-      font-size: 1.5rem;
-      line-height: 2rem;
+  .title {
+    font: var(--mat-sys-headline-large);
+
+    @media screen and (max-width: 959px) {
+      font: var(--mat-sys-headline-medium);
     }
   }
 }

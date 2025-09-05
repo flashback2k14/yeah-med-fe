@@ -10,9 +10,9 @@ import { APP_VERSION } from '../../core/tokens';
   template: `
     <ng-container *transloco="let t; prefix: 'settings'">
       <div class="container">
-        <h2 class="title">
+        <div class="title">
           {{ t('information.title') }}
-        </h2>
+        </div>
 
         <mat-divider />
 
