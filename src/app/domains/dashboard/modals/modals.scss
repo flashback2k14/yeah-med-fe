@@ -1,0 +1,24 @@
+mat-dialog-content {
+  padding-top: 1rem !important;
+  --mat-dialog-with-actions-content-padding: 1rem;
+}
+
+.half {
+  width: 49%;
+
+  @media screen and (max-width: 959px) {
+    width: 100%;
+  }
+}
+
+.spacer {
+  margin-left: 8px;
+
+  @media screen and (max-width: 959px) {
+    margin-left: unset;
+  }
+}
+
+.full {
+  width: 100%;
+}

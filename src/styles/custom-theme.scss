@@ -45,4 +45,8 @@ body {
     white-space: nowrap;
     border-width: 0;
   }
+
+  .mat-mdc-dialog-surface {
+    border: 2px solid var(--mat-sys-primary);
+  }
 }

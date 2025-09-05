@@ -1,4 +1,9 @@
-import { Component, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 
 @Component({
   selector: 'ym-notify',
@@ -56,6 +61,7 @@ import { Component, input, output } from '@angular/core';
     </div>
   `,
   styleUrl: './notify.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotifyComponent {
   protected text = input<string>('');

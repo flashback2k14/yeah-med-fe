@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
     </ng-container>
   `,
   styleUrl: './404-error.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslocoDirective, RouterLink, MatButtonModule],
 })
 export class FourZeroFourErrorComponent {}

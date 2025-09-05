@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   inject,
   OnInit,
@@ -28,6 +29,7 @@ import { MainComponent } from '../main/main';
     </div>
   `,
   styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet, HeaderComponent, FooterComponent, MainComponent],
 })
 export class App implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { MatDividerModule } from '@angular/material/divider';
 
@@ -21,6 +21,7 @@ import { APP_VERSION } from '../../core/tokens';
     </ng-container>
   `,
   styleUrl: './settings.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatDividerModule, TranslocoDirective],
 })
 export class SettingsComponent {

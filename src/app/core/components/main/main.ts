@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'ym-main',
@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
     </main>
   `,
   styleUrl: './main.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {}

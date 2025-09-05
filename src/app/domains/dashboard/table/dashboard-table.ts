@@ -1,6 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Component, computed, input, model, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  model,
+  output,
+} from '@angular/core';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -115,6 +122,7 @@ import { MatChipsModule } from '@angular/material/chips';
     </ng-container>
   `,
   styleUrl: './dashboard-table.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
     FormsModule,

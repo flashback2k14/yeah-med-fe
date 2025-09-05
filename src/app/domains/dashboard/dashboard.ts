@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,6 +37,7 @@ import { EditModal } from './modals/edit-modal';
     </ng-container>
   `,
   styleUrl: './dashboard.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslocoDirective, MatButtonModule, DashboardTableComponent],
 })
 export class DashboardComponent {
@@ -67,7 +68,7 @@ export class DashboardComponent {
           locations: this.locationsRef.value(),
         },
         width: '40%',
-        hasBackdrop: true,
+        hasBackdrop: false,
       })
       .afterClosed()
       .subscribe((result: TableRowRequest) => {
@@ -88,7 +89,7 @@ export class DashboardComponent {
     this.dialog.open(ShowModal, {
       data: row,
       width: '40%',
-      hasBackdrop: true,
+      hasBackdrop: false,
     });
   }
 
@@ -101,7 +102,7 @@ export class DashboardComponent {
           locations: this.locationsRef.value(),
         },
         width: '40%',
-        hasBackdrop: true,
+        hasBackdrop: false,
       })
       .afterClosed()
       .subscribe((result: TableRowRequest) => {
@@ -123,7 +124,7 @@ export class DashboardComponent {
       .open(DeleteModal, {
         data: row,
         width: '40%',
-        hasBackdrop: true,
+        hasBackdrop: false,
       })
       .afterClosed()
       .subscribe((result) => {

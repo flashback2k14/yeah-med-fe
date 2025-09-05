@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -43,6 +43,7 @@ import { AuthService } from '../../services/auth-service';
     </ng-container>
   `,
   styleUrl: './header.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslocoDirective,
     MatToolbarModule,

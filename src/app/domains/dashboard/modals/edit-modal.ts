@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -97,32 +102,8 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
       </form>
     </ng-container>
   `,
-  styles: `
-    mat-dialog-content {
-      padding-top: 1rem !important;
-      --mat-dialog-with-actions-content-padding: 1rem;
-    }
-
-    .half {
-      width: 49%;
-      
-      @media screen and (max-width: 959px) {
-        width: 100%;
-      }
-    }
-
-    .spacer {
-      margin-left: 8px;
-
-      @media screen and (max-width: 959px) {
-        margin-left: unset;
-      }
-    }
-
-    .full {
-      width: 100%
-    }
-  `,
+  styleUrl: './modals.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AutocompleteComponent,
     FormsModule,

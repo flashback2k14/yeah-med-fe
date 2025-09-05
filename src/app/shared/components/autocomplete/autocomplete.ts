@@ -62,6 +62,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
       width: inherit;
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     MatAutocompleteModule,
@@ -70,7 +71,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
     MatIconModule,
     TranslocoDirective,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutocompleteComponent {
   readonly labelKey = input('');

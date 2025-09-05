@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
@@ -49,6 +49,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
     </ng-container>
   `,
   styleUrl: './footer.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslocoDirective],
 })
 export class FooterComponent {}
