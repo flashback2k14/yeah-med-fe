@@ -33,6 +33,12 @@
     mat-icon {
       margin-right: 4px;
     }
+
+    @media screen and (max-width: 959px) {
+      span {
+        display: none;
+      }
+    }
   }
 
   .separator {

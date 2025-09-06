@@ -17,7 +17,7 @@ import { AuthService } from '../../services/auth-service';
         <mat-toolbar>
           <span routerLink="/dashboard" class="title">
             <mat-icon svgIcon="pill" />
-            {{ t('title') }}
+            <span>{{ t('title') }}</span>
           </span>
 
           <span class="spacer"></span>
@@ -25,33 +25,33 @@ import { AuthService } from '../../services/auth-service';
           @if (authService.isLoggedIn()) {
           <a routerLink="/dashboard" routerLinkActive="underline">
             <mat-icon svgIcon="pills" />
-            {{ t('dashboard') }}
+            <span>{{ t('dashboard') }}</span>
           </a>
 
           <span class="separator">|</span>
 
           <a routerLink="/settings" routerLinkActive="underline">
             <mat-icon svgIcon="setting" />
-            {{ t('settings') }}
+            <span>{{ t('settings') }}</span>
           </a>
 
           <span class="separator">|</span>
 
           <a routerLink="/dashboard" (click)="authService.logout()">
             <mat-icon svgIcon="logout" />
-            {{ t('actions.logout') }}
+            <span>{{ t('actions.logout') }}</span>
           </a>
           } @else {
           <a routerLink="/signin" routerLinkActive="underline">
             <mat-icon svgIcon="signin" />
-            {{ t('actions.login') }}
+            <span>{{ t('actions.login') }}</span>
           </a>
 
           <span class="separator">|</span>
 
           <a routerLink="/signup" routerLinkActive="underline">
             <mat-icon svgIcon="signup" />
-            {{ t('actions.signup') }}
+            <span>{{ t('actions.signup') }}</span>
           </a>
           }
         </mat-toolbar>
