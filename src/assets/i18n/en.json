@@ -4,7 +4,8 @@
     "dashboard": "Dashboard",
     "settings": "Settings",
     "actions": {
-      "login": "Login",
+      "login": "Sign in",
+      "signup": "Sign up",
       "logout": "Logout"
     }
   },
@@ -13,16 +14,18 @@
   },
   "notification": {
     "auth": {
-      "login": "Logging in with user {{email}}...",
+      "signin": "Signing in with user {{email}}...",
+      "signup": "Signing up with user {{email}}...",
       "logout": "Logging out with user {{email}}...",
-      "redirect": "You are not logged in. Redirected."
+      "redirect": "You are not logged in. Redirected.",
+      "password-mismatch": "Passwords not matching."
     },
     "error": {
       "default-http": "Unknown error."
     }
   },
-  "auth": {
-    "title": "Please enter your login credentials",
+  "signin": {
+    "title": "Please enter your sign in credentials",
     "email": {
       "label": "Email",
       "placeholder": "Please enter your email..."
@@ -31,7 +34,23 @@
       "label": "Password",
       "placeholder": "Please enter your password..."
     },
-    "submit": "Login"
+    "submit": "Sign In"
+  },
+  "signup": {
+    "title": "Please enter your sign up credentials",
+    "email": {
+      "label": "Email",
+      "placeholder": "Please enter your email..."
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Please enter your password..."
+    },
+    "passwordAgain": {
+      "label": "Password again",
+      "placeholder": "Please enter your password again..."
+    },
+    "submit": "Sign Up"
   },
   "dashboard": {
     "loading": "Loading...",

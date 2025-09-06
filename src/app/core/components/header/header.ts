@@ -34,8 +34,11 @@ import { AuthService } from '../../services/auth-service';
             {{ t('actions.logout') }}
           </a>
           } @else {
-          <a routerLink="/login">
+          <a routerLink="/signin">
             {{ t('actions.login') }}
+          </a>
+          <a routerLink="/signup">
+            {{ t('actions.signup') }}
           </a>
           }
         </mat-toolbar>

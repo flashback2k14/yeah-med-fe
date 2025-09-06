@@ -23,6 +23,6 @@ export const authGuard: CanActivateFn = (
 
   notification.show('notification.auth.redirect', {}, NotifyType.WARNING);
 
-  router.navigate(['login'], { queryParams: { returnUrl: state.url } });
+  router.navigate(['signin'], { queryParams: { returnUrl: state.url } });
   return false;
 };
