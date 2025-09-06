@@ -3,13 +3,18 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
   isDevMode,
+  inject,
+  provideAppInitializer,
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+
 import {
   MAT_DATE_LOCALE,
   provideNativeDateAdapter,
 } from '@angular/material/core';
+import { MatIconRegistry } from '@angular/material/icon';
 import { provideTransloco } from '@jsverse/transloco';
 
 import { environment } from '../../../environments/environment';
@@ -44,6 +49,40 @@ export const appConfig: ApplicationConfig = {
       provide: MAT_DATE_LOCALE,
       useValue: 'de-DE',
     },
+    provideAppInitializer(() => {
+      const iconRegistry = inject(MatIconRegistry);
+      const sanitizer = inject(DomSanitizer);
+
+      iconRegistry.addSvgIcon(
+        'logout',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/logout.svg')
+      );
+
+      iconRegistry.addSvgIcon(
+        'pill',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/pill.svg')
+      );
+
+      iconRegistry.addSvgIcon(
+        'pills',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/pills.svg')
+      );
+
+      iconRegistry.addSvgIcon(
+        'setting',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/setting.svg')
+      );
+
+      iconRegistry.addSvgIcon(
+        'signin',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/signin.svg')
+      );
+
+      iconRegistry.addSvgIcon(
+        'signup',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/signup.svg')
+      );
+    }),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),

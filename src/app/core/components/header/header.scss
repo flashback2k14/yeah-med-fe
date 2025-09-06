@@ -9,7 +9,13 @@
   }
 
   .title {
+    display: flex;
+    align-items: center;
     cursor: pointer;
+
+    mat-icon {
+      margin-right: 6px;
+    }
   }
 
   .spacer {
@@ -17,10 +23,20 @@
   }
 
   a {
+    display: flex;
+    align-items: center;
+
     text-decoration: none;
-    padding-right: 8px;
     color: var(--mat-sys-on-secondary-fixed);
     font: var(--mat-sys-body-large);
+
+    mat-icon {
+      margin-right: 4px;
+    }
+  }
+
+  .separator {
+    margin: 0 8px;
   }
 
   .underline {

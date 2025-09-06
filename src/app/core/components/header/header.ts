@@ -16,6 +16,7 @@ import { AuthService } from '../../services/auth-service';
       <div class="container">
         <mat-toolbar>
           <span routerLink="/dashboard" class="title">
+            <mat-icon svgIcon="pill" />
             {{ t('title') }}
           </span>
 
@@ -23,21 +24,33 @@ import { AuthService } from '../../services/auth-service';
 
           @if (authService.isLoggedIn()) {
           <a routerLink="/dashboard" routerLinkActive="underline">
+            <mat-icon svgIcon="pills" />
             {{ t('dashboard') }}
           </a>
 
+          <span class="separator">|</span>
+
           <a routerLink="/settings" routerLinkActive="underline">
+            <mat-icon svgIcon="setting" />
             {{ t('settings') }}
           </a>
 
+          <span class="separator">|</span>
+
           <a routerLink="/dashboard" (click)="authService.logout()">
+            <mat-icon svgIcon="logout" />
             {{ t('actions.logout') }}
           </a>
           } @else {
-          <a routerLink="/signin">
+          <a routerLink="/signin" routerLinkActive="underline">
+            <mat-icon svgIcon="signin" />
             {{ t('actions.login') }}
           </a>
-          <a routerLink="/signup">
+
+          <span class="separator">|</span>
+
+          <a routerLink="/signup" routerLinkActive="underline">
+            <mat-icon svgIcon="signup" />
             {{ t('actions.signup') }}
           </a>
           }
@@ -48,12 +61,12 @@ import { AuthService } from '../../services/auth-service';
   styleUrl: './header.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    TranslocoDirective,
-    MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatToolbarModule,
     RouterLink,
     RouterLinkActive,
+    TranslocoDirective,
   ],
 })
 export class HeaderComponent {
