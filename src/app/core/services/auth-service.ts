@@ -36,6 +36,18 @@ export class AuthService {
 
   public isLoggedIn = signal(false);
 
+  public checkLoggedInState(): boolean {
+    const valid = localStorage.getItem(StorageKeys.USER_LOGGED_IN) ?? false;
+    if (!valid) {
+      return false;
+    }
+
+    const result = JSON.parse(valid) as boolean;
+    this.isLoggedIn.set(result);
+
+    return result;
+  }
+
   public signin(email: string, password: string): void {
     this.notifyService.show('notification.auth.signin', { email });
 
