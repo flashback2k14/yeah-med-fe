@@ -67,8 +67,8 @@ export class DashboardComponent {
           categories: this.categoriesRef.value(),
           locations: this.locationsRef.value(),
         },
-        width: '40%',
-        hasBackdrop: false,
+        hasBackdrop: true,
+        disableClose: true,
       })
       .afterClosed()
       .subscribe((result: TableRowRequest) => {
@@ -88,8 +88,8 @@ export class DashboardComponent {
   protected handleShow(row: TableRow): void {
     this.dialog.open(ShowModal, {
       data: row,
-      width: '40%',
-      hasBackdrop: false,
+      hasBackdrop: true,
+      disableClose: true,
     });
   }
 
@@ -101,8 +101,8 @@ export class DashboardComponent {
           categories: this.categoriesRef.value(),
           locations: this.locationsRef.value(),
         },
-        width: '40%',
-        hasBackdrop: false,
+        hasBackdrop: true,
+        disableClose: true,
       })
       .afterClosed()
       .subscribe((result: TableRowRequest) => {
@@ -123,8 +123,8 @@ export class DashboardComponent {
     this.dialog
       .open(DeleteModal, {
         data: row,
-        width: '40%',
-        hasBackdrop: false,
+        hasBackdrop: true,
+        disableClose: true,
       })
       .afterClosed()
       .subscribe((result) => {

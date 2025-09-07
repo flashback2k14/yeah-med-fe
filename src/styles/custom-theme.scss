@@ -5,6 +5,15 @@
 // custom components at https://material.angular.dev/guide/theming
 @use "@angular/material" as mat;
 
+:root {
+  @include mat.dialog-overrides(
+    (
+      container-elevation-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.5),
+      container-min-width: 50%,
+    )
+  );
+}
+
 html {
   @include mat.theme(
     (

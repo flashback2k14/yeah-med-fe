@@ -10,6 +10,11 @@ export class StorageKeys {
   public static USER_LOGGED_IN = 'ymed:user:logged:in';
 }
 
+export class Messages {
+  public static SIGN_IN_SUCCESS = 'Signin success';
+  public static SIGN_UP_SUCCESS = 'Signup success';
+}
+
 export type User = {
   userId: string;
   email: string;
@@ -55,7 +60,7 @@ export class AuthService {
       .create<LoginRequest, LoginResponse>('/users/signin', { email, password })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value: LoginResponse) => {
-        if (value.message === 'Login Success') {
+        if (value.message === Messages.SIGN_IN_SUCCESS) {
           localStorage.setItem(StorageKeys.USER_LOGGED_IN, 'true');
           localStorage.setItem(StorageKeys.USER_EMAIL, value.user.email);
           localStorage.setItem(StorageKeys.USER_ID, value.user.userId);
@@ -76,13 +81,13 @@ export class AuthService {
     this.notifyService.show('notification.auth.signup', { email });
 
     this.httpService
-      .create<LoginRequest, User>('/users/signup', { email, password })
+      .create<LoginRequest, LoginResponse>('/users/signup', { email, password })
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: User) => {
-        if (value) {
+      .subscribe((value: LoginResponse) => {
+        if (value.message === Messages.SIGN_UP_SUCCESS) {
           this.signin(email, password);
         } else {
-          this.notifyService.showError((value as any)?.error);
+          this.notifyService.showError((value as any)?.error ?? value);
           localStorage.setItem(StorageKeys.USER_LOGGED_IN, 'false');
         }
       });

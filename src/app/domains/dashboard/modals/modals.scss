@@ -4,7 +4,7 @@ mat-dialog-content {
 }
 
 .half {
-  width: 49%;
+  width: calc(50% - 4px);
 
   @media screen and (max-width: 959px) {
     width: 100%;
