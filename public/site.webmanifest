@@ -1,0 +1,21 @@
+{
+  "name": "Yeah! Med",
+  "short_name": "Y!M",
+  "theme_color": "#1b1c1b",
+  "background_color": "#1b1c1b",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
