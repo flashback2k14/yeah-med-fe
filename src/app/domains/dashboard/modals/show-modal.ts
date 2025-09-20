@@ -61,6 +61,7 @@ import { TableRow } from '../models';
       font: var(--mat-sys-body-large);
     }
   `,
+  styleUrl: './modals.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,

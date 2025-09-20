@@ -4,10 +4,21 @@
 
 mat-form-field {
   margin-top: 0.5rem;
-  width: 50%;
+}
+
+.half {
+  width: calc(50% - 4px);
 
   @media screen and (max-width: 959px) {
     width: 100%;
+  }
+}
+
+.spacer {
+  margin-left: 8px;
+
+  @media screen and (max-width: 959px) {
+    margin-left: unset;
   }
 }
 
@@ -61,7 +72,14 @@ mat-form-field {
 
   .action-cell {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1rem;
+    transition: all 0.3s ease;
+
+    mat-icon:hover {
+      scale: 1.4;
+    }
   }
 
   .expired {

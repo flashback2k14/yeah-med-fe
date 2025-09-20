@@ -32,6 +32,7 @@ import { EditModal } from './modals/edit-modal';
         } @else {
         <ym-dashboard-table
           [rows]="dataRef.value()"
+          [categories]="categories()"
           (add)="handleAdd()"
           (show)="handleShow($event)"
           (edit)="handleEdit($event)"

@@ -60,8 +60,14 @@
       "edit": "Medication successfully edited.",
       "deleted": "Medication successfully deleted.",
       "filter": {
-        "label": "Filter by name",
-        "placeholder": "Please enter the name of the medication..."
+        "name": {
+          "label": "Filter by name",
+          "placeholder": "Please enter the name of the medication..."
+        },
+        "category": {
+          "label": "Filter by category",
+          "placeholder": "Please enter the category of the medication..."
+        }
       }
     },
     "add-modal": {

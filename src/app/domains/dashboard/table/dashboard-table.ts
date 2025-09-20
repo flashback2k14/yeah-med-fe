@@ -14,29 +14,47 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
 
 import { TranslocoDirective } from '@jsverse/transloco';
 
 import { TableRow } from '../models';
 import { IsExpiredPipe, SplitPipe } from '../pipes/table-pipes';
-import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'ym-dashboard-table',
   template: `
     <ng-container *transloco="let t; prefix: 'dashboard'">
-      <mat-form-field appearance="outline">
-        <mat-label>{{ t('table.filter.label') }}</mat-label>
+      <!-- FILTER: NAME -->
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>{{ t('table.filter.name.label') }}</mat-label>
         <input
           matInput
           type="text"
-          [(ngModel)]="filter"
-          [placeholder]="t('table.filter.placeholder')"
+          [(ngModel)]="filterByName"
+          [placeholder]="t('table.filter.name.placeholder')"
         />
-        <button matIconButton matSuffix (click)="clearFilter()">
+        <button matIconButton matSuffix (click)="clearFilterByName()">
           <mat-icon>clear</mat-icon>
         </button>
       </mat-form-field>
+      <!-- FILTER: CATEGORY -->
+      <mat-form-field appearance="outline" class="half spacer">
+        <mat-label>{{ t('table.filter.category.label') }}</mat-label>
+        <mat-select [(ngModel)]="filterByCategory">
+          <mat-option disabled="">{{
+            t('table.filter.category.placeholder')
+          }}</mat-option>
+          @for(category of categories(); track category) {
+          <mat-option [value]="category">{{ category }}</mat-option>
+          }
+        </mat-select>
+        <button matIconButton matSuffix (click)="clearFilterByCategory()">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- TABLE -->
       <div class="container">
         <table mat-table [dataSource]="this.filteredRows()">
           <!-- Name Column -->
@@ -94,9 +112,11 @@ import { MatChipsModule } from '@angular/material/chips';
             </th>
             <td mat-cell *matCellDef="let element">
               <div class="action-cell">
-                <mat-icon (click)="handleShow(element)">info</mat-icon>
                 <mat-icon (click)="handleEdit(element)">edit</mat-icon>
                 <mat-icon (click)="handleDelete(element)">delete</mat-icon>
+                @if (element.description || element.productId) {
+                <mat-icon (click)="handleShow(element)">info</mat-icon>
+                }
               </div>
             </td>
           </ng-container>
@@ -132,6 +152,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSelectModule,
     MatTableModule,
     SplitPipe,
     TranslocoDirective,
@@ -139,11 +160,19 @@ import { MatChipsModule } from '@angular/material/chips';
 })
 export class DashboardTableComponent {
   rows = input.required<TableRow[]>();
+  categories = input.required<string[]>();
 
-  filter = model<string>();
+  filterByName = model<string>();
+  filterByCategory = model<string>();
+
   filteredRows = computed(() => {
-    const filter = this.filter();
-    return filter ? this.applyFilter(filter) : this.rows();
+    const filterByName = this.filterByName();
+    const filterByCateory = this.filterByCategory();
+    return filterByName
+      ? this.applyFilterByName(filterByName)
+      : filterByCateory
+      ? this.applyFilterByCategory(filterByCateory)
+      : this.rows();
   });
 
   displayedColumns = ['name', 'category', 'location', 'expiredAt', 'actions'];
@@ -158,13 +187,23 @@ export class DashboardTableComponent {
   protected handleEdit = (row: TableRow) => this.edit.emit(row);
   protected handleDelete = (row: TableRow) => this.delete.emit(row);
 
-  protected clearFilter(): void {
-    this.filter.set('');
+  protected clearFilterByName(): void {
+    this.filterByName.set('');
   }
 
-  private applyFilter(clause: string): TableRow[] {
+  protected clearFilterByCategory(): void {
+    this.filterByCategory.set('');
+  }
+
+  private applyFilterByName(clause: string): TableRow[] {
     return this.rows().filter((row: TableRow) =>
       row.name.toUpperCase().includes(clause.toUpperCase())
+    );
+  }
+
+  private applyFilterByCategory(clause: string): TableRow[] {
+    return this.rows().filter((row: TableRow) =>
+      row.category.toUpperCase().includes(clause.toUpperCase())
     );
   }
 }
