@@ -4,8 +4,6 @@ import {
   computed,
   input,
   model,
-  output,
-  signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -77,9 +75,8 @@ export class AutocompleteComponent {
   readonly placeholderKey = input('');
   readonly all = model<string[]>([]);
   readonly selectedEntries = model<string[]>([]);
-  readonly selected = output<string[]>();
 
-  readonly currentInput = signal('');
+  readonly currentInput = model('');
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   readonly filteredInput = computed(() => {
@@ -96,10 +93,10 @@ export class AutocompleteComponent {
 
     if (value) {
       this.selectedEntries.update((entries) => [...entries, value]);
-      this.selected.emit(this.selectedEntries());
     }
 
     this.currentInput.set('');
+    event.chipInput.clear();
   }
 
   remove(entry: string): void {
@@ -112,7 +109,6 @@ export class AutocompleteComponent {
       entries.splice(index, 1);
       return [...entries];
     });
-    this.selected.emit(this.selectedEntries());
   }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {
@@ -122,6 +118,5 @@ export class AutocompleteComponent {
     ]);
     this.currentInput.set('');
     event.option.deselect();
-    this.selected.emit(this.selectedEntries());
   }
 }

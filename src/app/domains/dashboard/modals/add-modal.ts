@@ -54,7 +54,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
               matIconSuffix
               [for]="picker"
             ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker startView="multi-year"></mat-datepicker>
           </mat-form-field>
 
           <ym-autocomplete
@@ -95,10 +95,17 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
           </mat-form-field>
         </mat-dialog-content>
         <mat-dialog-actions align="end">
-          <button matButton [mat-dialog-close]>{{ t('actions.close') }}</button>
-          <button type="submit" matButton cdkFocusInitial>
-            {{ t('actions.save') }}
-          </button>
+          <div class="actions">
+            <span>{{ t('actions.required') }}</span>
+            <div>
+              <button matButton [mat-dialog-close]>
+                {{ t('actions.close') }}
+              </button>
+              <button type="submit" matButton>
+                {{ t('actions.save') }}
+              </button>
+            </div>
+          </div>
         </mat-dialog-actions>
       </form>
     </ng-container>

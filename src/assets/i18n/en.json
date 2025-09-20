@@ -91,6 +91,7 @@
         "placeholder": "Enter product number..."
       },
       "actions": {
+        "required": "* - required",
         "close": "Close",
         "save": "Save"
       }

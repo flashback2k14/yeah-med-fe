@@ -22,3 +22,14 @@ mat-dialog-content {
 .full {
   width: 100%;
 }
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  span {
+    font: var(--mat-sys-label-medium);
+  }
+}

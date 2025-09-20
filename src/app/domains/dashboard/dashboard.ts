@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
@@ -60,12 +65,34 @@ export class DashboardComponent {
     defaultValue: [],
   });
 
+  protected categories = computed(() => {
+    const entries = this.categoriesRef.value();
+    return Array.from(
+      new Set(
+        entries.flatMap((entry: string) =>
+          entry.includes(',') ? entry.split(',') : entry
+        )
+      )
+    );
+  });
+
+  protected locations = computed(() => {
+    const entries = this.locationsRef.value();
+    return Array.from(
+      new Set(
+        entries.flatMap((entry: string) =>
+          entry.includes(',') ? entry.split(',') : entry
+        )
+      )
+    );
+  });
+
   protected handleAdd(): void {
     this.dialog
       .open(AddModal, {
         data: {
-          categories: this.categoriesRef.value(),
-          locations: this.locationsRef.value(),
+          categories: this.categories(),
+          locations: this.locations(),
         },
         hasBackdrop: true,
         disableClose: true,
@@ -80,7 +107,7 @@ export class DashboardComponent {
           .create<TableRowRequest>('/meds', result)
           .subscribe(() => {
             this.notifyService.show('dashboard.table.added');
-            this.dataRef.reload();
+            this.refresh();
           });
       });
   }
@@ -98,8 +125,8 @@ export class DashboardComponent {
       .open(EditModal, {
         data: {
           selectedRow: JSON.parse(JSON.stringify(row)),
-          categories: this.categoriesRef.value(),
-          locations: this.locationsRef.value(),
+          categories: this.categories(),
+          locations: this.locations(),
         },
         hasBackdrop: true,
         disableClose: true,
@@ -114,7 +141,7 @@ export class DashboardComponent {
           .update<TableRowRequest>(`/meds/${row.id}`, result)
           .subscribe(() => {
             this.notifyService.show('dashboard.table.edit');
-            this.dataRef.reload();
+            this.refresh();
           });
       });
   }
@@ -131,9 +158,15 @@ export class DashboardComponent {
         if (result) {
           this.httpService.delete(`/meds/${row.id}`).subscribe(() => {
             this.notifyService.show('dashboard.table.deleted');
-            this.dataRef.reload();
+            this.refresh();
           });
         }
       });
+  }
+
+  private refresh(): void {
+    this.dataRef.reload();
+    this.categoriesRef.reload();
+    this.locationsRef.reload();
   }
 }
