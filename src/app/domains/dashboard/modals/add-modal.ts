@@ -26,7 +26,9 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
     <ng-container *transloco="let t; prefix: 'dashboard.add-modal'">
       <form #f="ngForm" (ngSubmit)="onSubmit(f)">
         <h2 mat-dialog-title>{{ t('title') }}</h2>
+        
         <mat-dialog-content class="mat-typography">
+          <!-- NAME -->
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('name.label') }}</mat-label>
             <input
@@ -40,6 +42,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
             />
           </mat-form-field>
 
+          <!-- EXPIRED AT -->
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('expiredAt.label') }}</mat-label>
             <input
@@ -57,6 +60,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
             <mat-datepicker #picker startView="multi-year"></mat-datepicker>
           </mat-form-field>
 
+          <!-- CATEGORY -->
           <ym-autocomplete
             class="half"
             [all]="deps.categories"
@@ -65,6 +69,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
             placeholderKey="dashboard.add-modal.category.placeholder"
           />
 
+          <!-- LOCATION -->
           <ym-autocomplete
             class="half spacer"
             [all]="deps.locations"
@@ -73,6 +78,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
             placeholderKey="dashboard.add-modal.location.placeholder"
           />
 
+          <!-- DESCRIPTION -->
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('description.label') }}</mat-label>
             <textarea
@@ -83,6 +89,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
             ></textarea>
           </mat-form-field>
 
+          <!-- PRODUCT ID -->
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('productId.label') }}</mat-label>
             <input
@@ -94,6 +101,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
             />
           </mat-form-field>
         </mat-dialog-content>
+
         <mat-dialog-actions align="end">
           <div class="actions">
             <span>{{ t('actions.required') }}</span>

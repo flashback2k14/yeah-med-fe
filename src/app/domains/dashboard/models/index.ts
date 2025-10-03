@@ -5,6 +5,10 @@ export type TableRow = {
   productId: string;
   category: string;
   location: string;
+  categoryColor: string;
+  count: string;
+  company: string;
+  isExpired?: boolean;
   expiredAt: Date;
   createdAt: Date;
 };

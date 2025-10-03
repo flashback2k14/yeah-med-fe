@@ -23,9 +23,15 @@ mat-form-field {
 }
 
 .container {
+  height: calc(100vh - 76px - 96px - 88px - 42px);
+  margin-bottom: 18px;
   overflow: auto;
-  height: 62vh;
   border-radius: 0.5rem;
+
+  @media screen and (max-width: 959px) {
+    height: calc(100vh - 76px - 76px - 96px - 88px - 32px);
+    margin-bottom: unset;
+  }
 
   .mat-mdc-table-sticky-border-elem-left {
     border-right: 1px solid #e0e0e0;
