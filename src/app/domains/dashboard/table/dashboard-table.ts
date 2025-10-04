@@ -4,9 +4,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
   model,
   output,
+  signal,
 } from '@angular/core';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 import { TranslocoDirective } from '@jsverse/transloco';
 
@@ -26,118 +30,132 @@ import { IsExpiredPipe, SplitPipe } from '../pipes/table-pipes';
   selector: 'ym-dashboard-table',
   template: `
     <ng-container *transloco="let t; prefix: 'dashboard'">
-      <!-- FILTER: NAME -->
-      <mat-form-field appearance="outline" class="half">
-        <mat-label>{{ t('table.filter.name.label') }}</mat-label>
-        <input
-          matInput
-          type="text"
-          [(ngModel)]="filterByName"
-          [placeholder]="t('table.filter.name.placeholder')"
-        />
-        <button matIconButton matSuffix (click)="clearFilterByName()">
-          <mat-icon>clear</mat-icon>
-        </button>
-      </mat-form-field>
-      <!-- FILTER: CATEGORY -->
-      <mat-form-field appearance="outline" class="half spacer">
-        <mat-label>{{ t('table.filter.category.label') }}</mat-label>
-        <mat-select [(ngModel)]="filterByCategory">
-          <mat-option disabled="">{{
-            t('table.filter.category.placeholder')
-          }}</mat-option>
-          @for(category of categories(); track category) {
-          <mat-option [value]="category">{{ category }}</mat-option>
-          }
-        </mat-select>
-        <button matIconButton matSuffix (click)="clearFilterByCategory()">
-          <mat-icon>clear</mat-icon>
-        </button>
-      </mat-form-field>
-      <!-- TABLE -->
-      <div class="container">
-        <table mat-table [dataSource]="this.filteredRows()">
-          <!-- Name Column -->
-          <ng-container matColumnDef="name" sticky>
-            <th mat-header-cell *matHeaderCellDef class="first-column">Name</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.name }}
-            </td>
-          </ng-container>
-
-          <!-- Category Column -->
-          <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let element">
-              <mat-chip-set>
-                @for(category of element.category | split; track category) {
-                <mat-chip>{{ category }}</mat-chip>
+      <div class="wrapper">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header (click)="toggle()">
+              Filter
+            </mat-expansion-panel-header>
+            <!-- FILTER: NAME -->
+            <mat-form-field appearance="outline" class="half">
+              <mat-label>{{ t('table.filter.name.label') }}</mat-label>
+              <input
+                matInput
+                type="text"
+                [(ngModel)]="filterByName"
+                [placeholder]="t('table.filter.name.placeholder')"
+              />
+              <button matIconButton matSuffix (click)="clearFilterByName()">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </mat-form-field>
+            <!-- FILTER: CATEGORY -->
+            <mat-form-field appearance="outline" class="half spacer">
+              <mat-label>{{ t('table.filter.category.label') }}</mat-label>
+              <mat-select [(ngModel)]="filterByCategory">
+                <mat-option disabled="">{{
+                  t('table.filter.category.placeholder')
+                }}</mat-option>
+                @for(category of categories(); track category) {
+                <mat-option [value]="category">{{ category }}</mat-option>
                 }
-              </mat-chip-set>
-            </td>
-          </ng-container>
+              </mat-select>
+              <button matIconButton matSuffix (click)="clearFilterByCategory()">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!-- TABLE -->
+        <div
+          [style.--ym-filter-container-height]="containerHeight()"
+          class="container"
+        >
+          <table mat-table [dataSource]="this.filteredRows()">
+            <!-- Name Column -->
+            <ng-container matColumnDef="name" sticky>
+              <th mat-header-cell *matHeaderCellDef class="first-column">
+                Name
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.name }}
+              </td>
+            </ng-container>
 
-          <!-- Location Column -->
-          <ng-container matColumnDef="location">
-            <th mat-header-cell *matHeaderCellDef>Location</th>
-            <td mat-cell *matCellDef="let element">
-              <mat-chip-set>
-                @for(location of element.location | split; track location) {
-                <mat-chip>{{ location }}</mat-chip>
-                }
-              </mat-chip-set>
-            </td>
-          </ng-container>
+            <!-- Category Column -->
+            <ng-container matColumnDef="category">
+              <th mat-header-cell *matHeaderCellDef>Category</th>
+              <td mat-cell *matCellDef="let element">
+                <mat-chip-set>
+                  @for(category of element.category | split; track category) {
+                  <mat-chip>{{ category }}</mat-chip>
+                  }
+                </mat-chip-set>
+              </td>
+            </ng-container>
 
-          <!-- Expired At Column -->
-          <ng-container matColumnDef="expiredAt">
-            <th mat-header-cell *matHeaderCellDef>Expired At</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.expiredAt | date }}
-            </td>
-          </ng-container>
+            <!-- Location Column -->
+            <ng-container matColumnDef="location">
+              <th mat-header-cell *matHeaderCellDef>Location</th>
+              <td mat-cell *matCellDef="let element">
+                <mat-chip-set>
+                  @for(location of element.location | split; track location) {
+                  <mat-chip>{{ location }}</mat-chip>
+                  }
+                </mat-chip-set>
+              </td>
+            </ng-container>
 
-          <!-- Action Column -->
-          <ng-container matColumnDef="actions" stickyEnd>
-            <th
-              mat-header-cell
-              *matHeaderCellDef
-              aria-label="row actions"
-              class="last-column"
-            >
-              <div class="action-header" (click)="handleAdd()">
-                <span>New</span>
-                <mat-icon>add</mat-icon>
-              </div>
-            </th>
-            <td mat-cell *matCellDef="let element">
-              <div class="action-cell">
-                <mat-icon (click)="handleEdit(element)">edit</mat-icon>
-                <mat-icon (click)="handleDelete(element)">delete</mat-icon>
-                @if (element.description || element.productId) {
-                <mat-icon (click)="handleShow(element)">info</mat-icon>
-                }
-              </div>
-            </td>
-          </ng-container>
+            <!-- Expired At Column -->
+            <ng-container matColumnDef="expiredAt">
+              <th mat-header-cell *matHeaderCellDef>Expired At</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.expiredAt | date }}
+              </td>
+            </ng-container>
 
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="5">
-              <h2 class="no-data">No data available.</h2>
-            </td>
-          </tr>
+            <!-- Action Column -->
+            <ng-container matColumnDef="actions" stickyEnd>
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                aria-label="row actions"
+                class="last-column"
+              >
+                <div class="action-header" (click)="handleAdd()">
+                  <span>New</span>
+                  <mat-icon>add</mat-icon>
+                </div>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="action-cell">
+                  <mat-icon (click)="handleEdit(element)">edit</mat-icon>
+                  <mat-icon (click)="handleDelete(element)">delete</mat-icon>
+                  @if (element.description || element.productId) {
+                  <mat-icon (click)="handleShow(element)">info</mat-icon>
+                  }
+                </div>
+              </td>
+            </ng-container>
 
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumns; sticky: true"
-            class="no-hover"
-          ></tr>
-          <tr
-            mat-row
-            [class.expired]="row.expiredAt | isExpired"
-            *matRowDef="let row; columns: displayedColumns"
-          ></tr>
-        </table>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="5">
+                <h2 class="no-data">No data available.</h2>
+              </td>
+            </tr>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+              class="no-hover"
+            ></tr>
+            <tr
+              mat-row
+              [class.expired]="row.expiredAt | isExpired"
+              *matRowDef="let row; columns: displayedColumns"
+            ></tr>
+          </table>
+        </div>
       </div>
     </ng-container>
   `,
@@ -149,6 +167,7 @@ import { IsExpiredPipe, SplitPipe } from '../pipes/table-pipes';
     IsExpiredPipe,
     MatButtonModule,
     MatChipsModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -159,6 +178,9 @@ import { IsExpiredPipe, SplitPipe } from '../pipes/table-pipes';
   ],
 })
 export class DashboardTableComponent {
+  private readonly breakpointObserver = inject(BreakpointObserver);
+  private toggleValue = signal<boolean>(false);
+
   rows = input.required<TableRow[]>();
   categories = input.required<string[]>();
 
@@ -173,6 +195,25 @@ export class DashboardTableComponent {
       : filterByCateory
       ? this.applyFilterByCategory(filterByCateory)
       : this.rows();
+  });
+
+  containerHeight = computed(() => {
+    const isOpened = this.toggleValue();
+    const isMobile = this.breakpointObserver.isMatched('(max-width: 959px)');
+
+    if (isOpened) {
+      if (isMobile) {
+        return 'calc(100vh - 222px - 96px - 88px - 32px)';
+      } else {
+        return 'calc(100vh - 4px - 96px - 88px - 42px - 156px)';
+      }
+    } else {
+      if (isMobile) {
+        return 'calc(100vh - 4px - 96px - 88px - 42px - 18px)';
+      } else {
+        return 'calc(100vh - 4px - 96px - 88px - 42px - 48px)';
+      }
+    }
   });
 
   displayedColumns = ['name', 'category', 'location', 'expiredAt', 'actions'];
@@ -193,6 +234,10 @@ export class DashboardTableComponent {
 
   protected clearFilterByCategory(): void {
     this.filterByCategory.set('');
+  }
+
+  protected toggle(): void {
+    this.toggleValue.set(!this.toggleValue());
   }
 
   private applyFilterByName(clause: string): TableRow[] {
