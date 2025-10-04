@@ -2,6 +2,7 @@
   "nav": {
     "title": "Yeah! Med",
     "dashboard": "Dashboard",
+    "shopping": "Shopping",
     "settings": "Settings",
     "actions": {
       "login": "Sign in",
@@ -151,6 +152,26 @@
       },
       "actions": {
         "close": "Close"
+      }
+    }
+  },
+  "shopping": {
+    "coupon": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter name..."
+      },
+      "expiredAt": {
+        "label": "Expired at",
+        "placeholder": "Enter expiration date..."
+      },
+      "website": {
+        "label": "Website",
+        "placeholder": "Enter website..."
+      },
+      "actions": {
+        "close": "Close",
+        "save": "Save"
       }
     }
   },

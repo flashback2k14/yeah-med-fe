@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  column-gap: 1rem;
+  height: 100%;
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    width: 50%;
+    height: inherit;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--mat-sys-level3);
+
+    .title {
+      padding: 0.5rem 0;
+
+      span {
+        font: var(--mat-sys-headline-medium);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+    }
+
+    .list {
+      flex: 1;
+      overflow: auto;
+
+      mat-list-item {
+        display: flex;
+
+        mat-icon {
+          margin-right: 0.5rem;
+        }
+
+        div[matListItemTitle] {
+          font: var(--mat-sys-body-large);
+        }
+
+        a {
+          text-decoration: none;
+          color: var(--mat-sys-primary);
+          font: var(--mat-sys-body-medium);
+        }
+      }
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 1rem;
+    }
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+
+    width: 50%;
+    height: inherit;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--mat-sys-level3);
+  }
+}

@@ -30,6 +30,13 @@ import { AuthService } from '../../services/auth-service';
 
           <span class="separator">|</span>
 
+          <a routerLink="/shopping" routerLinkActive="underline">
+            <mat-icon svgIcon="shopping" />
+            <span>{{ t('shopping') }}</span>
+          </a>
+
+          <span class="separator">|</span>
+
           <a routerLink="/settings" routerLinkActive="underline">
             <mat-icon svgIcon="setting" />
             <span>{{ t('settings') }}</span>
