@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { DatePipe } from '@angular/common';
 import { HttpService } from '../../core/services/http-service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'ym-shopping',
@@ -28,27 +29,29 @@ import { rxResource } from '@angular/core/rxjs-interop';
           <h2>ERROR!!!!</h2>
           } @else {
           <!-- -->
-          @if (couponRef.value().length === 0) {
-          <h2>No data...</h2>
-          } @else {
-          <!-- -->
-          @for (coupon of couponRef.value(); track coupon.id) {
-          <mat-list-item>
-            <mat-icon matListItemIcon svgIcon="coupon">coupon</mat-icon>
-            <div matListItemTitle>{{ coupon.name }}</div>
-            <div matListItemLine>{{ coupon.expiredAt | date }}</div>
-            @if(coupon.website) {
-            <div matListItemLine>
-              <a [href]="coupon.website" target="_blank" rel="noreferrer">{{
-                coupon.website
-              }}</a>
-            </div>
+          <mat-list>
+            @for (coupon of couponRef.value(); track coupon.id) {
+            <mat-list-item>
+              <mat-icon matListItemIcon svgIcon="coupon">coupon</mat-icon>
+              <div matListItemTitle>{{ coupon.name }}</div>
+              <div matListItemLine>{{ coupon.expiredAt | date }}</div>
+              @if(coupon.website) {
+              <div matListItemLine>
+                <a [href]="coupon.website" target="_blank" rel="noreferrer">{{
+                  coupon.website
+                }}</a>
+              </div>
+              }
+            </mat-list-item>
+            @if (!$last) {
+            <mat-divider></mat-divider>
             }
-          </mat-list-item>
-          }
-          <!-- -->
-          }
-          <!-- -->
+            <!-- -->
+            } @empty {
+            <h2>No data...</h2>
+            }
+            <!-- -->
+          </mat-list>
           }
         </div>
 
@@ -79,6 +82,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
     MatButtonModule,
     MatIconModule,
     MatBottomSheetModule,
+    MatDividerModule,
     MatListModule,
   ],
 })
