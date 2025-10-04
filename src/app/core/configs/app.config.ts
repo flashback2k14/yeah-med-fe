@@ -51,6 +51,11 @@ export const appConfig: ApplicationConfig = {
       );
 
       iconRegistry.addSvgIcon(
+        'shopping',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/shopping.svg')
+      );
+
+      iconRegistry.addSvgIcon(
         'setting',
         sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/setting.svg')
       );
@@ -63,6 +68,11 @@ export const appConfig: ApplicationConfig = {
       iconRegistry.addSvgIcon(
         'signup',
         sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/signup.svg')
+      );
+
+      iconRegistry.addSvgIcon(
+        'coupon',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/coupon.svg')
       );
     }),
     provideBrowserGlobalErrorListeners(),

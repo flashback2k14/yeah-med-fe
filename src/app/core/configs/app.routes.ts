@@ -21,6 +21,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'shopping',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('../../domains/shopping/shopping').then(
+        (c) => c.ShoppingComponent
+      ),
+  },
+  {
     path: 'settings',
     canActivate: [authGuard],
     loadComponent: () =>
