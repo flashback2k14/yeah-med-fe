@@ -1,7 +1,12 @@
 .container {
   display: flex;
   column-gap: 1rem;
-  height: 100%;
+  height: calc(100vh - 88px - 88px - 2rem);
+
+  @media screen and (max-width: 959px) {
+    flex-direction: column;
+    row-gap: 1rem;
+  }
 
   .left {
     display: flex;
@@ -13,6 +18,12 @@
     padding: 0 1rem;
     border-radius: 0.5rem;
     box-shadow: var(--mat-sys-level3);
+
+    @media screen and (max-width: 959px) {
+      width: 100%;
+      border-radius: unset;
+      box-shadow: unset;
+    }
 
     .title {
       padding: 0.5rem 0;
@@ -31,7 +42,7 @@
       mat-list-item {
         display: flex;
 
-        mat-icon {
+        mat-icon[matListItemIcon] {
           margin-right: 0.5rem;
         }
 
@@ -39,11 +50,41 @@
           font: var(--mat-sys-body-large);
         }
 
+        div[matListItemMeta] {
+          display: flex;
+          align-items: center;
+          height: inherit;
+
+          mat-icon {
+            cursor: pointer;
+
+            &:first-child {
+              margin-right: 1rem;
+            }
+
+            &:hover {
+              transform: scale(1.2);
+              --mat-icon-color: var(--mat-sys-primary);
+
+              &:last-child {
+                --mat-icon-color: var(--mat-sys-error);
+              }
+            }
+          }
+        }
+
         a {
           text-decoration: none;
           color: var(--mat-sys-primary);
           font: var(--mat-sys-body-medium);
         }
+      }
+
+      .expired {
+        --mat-list-list-item-leading-icon-color: var(--mat-sys-error);
+        --mat-list-list-item-hover-leading-icon-color: var(--mat-sys-error);
+        --mat-list-list-item-label-text-color: var(--mat-sys-error);
+        --mat-list-list-item-hover-label-text-color: var(--mat-sys-error);
       }
     }
 
@@ -63,5 +104,11 @@
     padding: 0 1rem;
     border-radius: 0.5rem;
     box-shadow: var(--mat-sys-level3);
+
+    @media screen and (max-width: 959px) {
+      width: 100%;
+      border-radius: unset;
+      box-shadow: unset;
+    }
   }
 }

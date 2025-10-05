@@ -1,13 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import {
+  MAT_BOTTOM_SHEET_DATA,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { CouponRequest } from '../models';
+import { CouponRequest, CouponResponse } from '../models';
 
 @Component({
   selector: 'ym-shopping-coupon-sheet',
@@ -24,7 +27,7 @@ import { CouponRequest } from '../models';
               [placeholder]="t('name.placeholder')"
               required=""
               name="name"
-              ngModel
+              [(ngModel)]="data.name"
               autofocus
             />
           </mat-form-field>
@@ -38,7 +41,7 @@ import { CouponRequest } from '../models';
               [placeholder]="t('expiredAt.placeholder')"
               required=""
               name="expiredAt"
-              ngModel
+              [(ngModel)]="data.expiredAt"
             />
             <mat-datepicker-toggle
               matIconSuffix
@@ -55,7 +58,7 @@ import { CouponRequest } from '../models';
               type="url"
               [placeholder]="t('website.placeholder')"
               name="website"
-              ngModel
+              [(ngModel)]="data.website"
             />
           </mat-form-field>
 
@@ -97,6 +100,7 @@ import { CouponRequest } from '../models';
 export class CouponSheet {
   private bottomSheetRef =
     inject<MatBottomSheetRef<CouponSheet, CouponRequest>>(MatBottomSheetRef);
+  protected readonly data = inject<CouponResponse>(MAT_BOTTOM_SHEET_DATA);
 
   close(): void {
     this.bottomSheetRef.dismiss();
