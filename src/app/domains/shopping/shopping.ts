@@ -1,17 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { DatePipe } from '@angular/common';
+
 import {
   MatBottomSheet,
   MatBottomSheetModule,
 } from '@angular/material/bottom-sheet';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CouponSheet } from './sheets/coupon-sheet';
-import { CouponRequest, CouponResponse } from './models';
 import { MatListModule } from '@angular/material/list';
-import { DatePipe } from '@angular/common';
+
 import { HttpService } from '../../core/services/http-service';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { MatDividerModule } from '@angular/material/divider';
+import { IsExpiredPipe } from '../dashboard/pipes/table-pipes';
+import { CouponRequest, CouponResponse } from './models';
+import { CouponSheet } from './sheets/coupon-sheet';
 
 @Component({
   selector: 'ym-shopping',
@@ -31,8 +34,12 @@ import { MatDividerModule } from '@angular/material/divider';
           <!-- -->
           <mat-list>
             @for (coupon of couponRef.value(); track coupon.id) {
-            <mat-list-item>
+            <mat-list-item [class.expired]="coupon.expiredAt | isExpired">
               <mat-icon matListItemIcon svgIcon="coupon">coupon</mat-icon>
+              <div matListItemMeta>
+                <mat-icon (click)="handleEdit(coupon)">edit</mat-icon>
+                <mat-icon (click)="handleDelete(coupon)">delete</mat-icon>
+              </div>
               <div matListItemTitle>{{ coupon.name }}</div>
               <div matListItemLine>{{ coupon.expiredAt | date }}</div>
               @if(coupon.website) {
@@ -79,10 +86,11 @@ import { MatDividerModule } from '@angular/material/divider';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
-    MatButtonModule,
-    MatIconModule,
+    IsExpiredPipe,
     MatBottomSheetModule,
+    MatButtonModule,
     MatDividerModule,
+    MatIconModule,
     MatListModule,
   ],
 })
@@ -94,6 +102,42 @@ export class ShoppingComponent {
     stream: () => this.httpService.get<CouponResponse[]>('/coupons'),
     defaultValue: [],
   });
+
+  handleDelete(coupon: CouponResponse) {
+    const answer = confirm(
+      'Are you sure to delete the coupon: ' + coupon.name + '?'
+    );
+
+    if (answer) {
+      this.httpService
+        .delete('/coupons/' + coupon.id)
+        .subscribe(() => this.couponRef.reload());
+    }
+  }
+
+  handleEdit(coupon: CouponResponse) {
+    this.bottomSheet
+      .open(CouponSheet, {
+        data: JSON.parse(JSON.stringify(coupon)),
+        hasBackdrop: true,
+        disableClose: true,
+      })
+      .afterDismissed()
+      .subscribe((result: CouponRequest) => {
+        if (!result) {
+          return;
+        }
+
+        const data = {
+          ...coupon,
+          ...result,
+        };
+
+        this.httpService
+          .update<CouponResponse>(`/coupons/${coupon.id}`, data)
+          .subscribe(() => this.couponRef.reload());
+      });
+  }
 
   openCouptonSheet(): void {
     this.bottomSheet
