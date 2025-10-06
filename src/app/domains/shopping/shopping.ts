@@ -104,11 +104,11 @@ export class ShoppingComponent {
   });
 
   handleDelete(coupon: CouponResponse) {
-    const answer = confirm(
+    const confirmed = confirm(
       'Are you sure to delete the coupon: ' + coupon.name + '?'
     );
 
-    if (answer) {
+    if (confirmed) {
       this.httpService
         .delete('/coupons/' + coupon.id)
         .subscribe(() => this.couponRef.reload());
@@ -141,7 +141,7 @@ export class ShoppingComponent {
 
   openCouptonSheet(): void {
     this.bottomSheet
-      .open(CouponSheet, { hasBackdrop: true, disableClose: true })
+      .open(CouponSheet, { data: {}, hasBackdrop: true, disableClose: true })
       .afterDismissed()
       .subscribe((result: CouponRequest) => {
         if (!result) {
