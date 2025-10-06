@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { TranslocoDirective } from '@jsverse/transloco';
 
+import { NotifyService } from '../../../core/services/notify-service';
 import { HttpService } from '../../../core/services/http-service';
 import { IsExpiredPipe } from '../../dashboard/pipes/table-pipes';
 import { CouponResponse, CouponRequest } from '../models';
@@ -84,6 +85,7 @@ import { CouponSheet } from '../sheets/coupon-sheet';
   ],
 })
 export class CouponsComponent {
+  private readonly notifyService = inject(NotifyService);
   private readonly bottomSheet = inject(MatBottomSheet);
   private readonly httpService = inject(HttpService);
 
@@ -98,9 +100,10 @@ export class CouponsComponent {
     );
 
     if (confirmed) {
-      this.httpService
-        .delete('/coupons/' + coupon.id)
-        .subscribe(() => this.couponRef.reload());
+      this.httpService.delete('/coupons/' + coupon.id).subscribe(() => {
+        this.notifyService.show('shopping.coupons.notify.deleted');
+        this.couponRef.reload();
+      });
     }
   }
 
@@ -124,7 +127,10 @@ export class CouponsComponent {
 
         this.httpService
           .update<CouponResponse>(`/coupons/${coupon.id}`, data)
-          .subscribe(() => this.couponRef.reload());
+          .subscribe(() => {
+            this.notifyService.show('shopping.coupons.notify.edit');
+            this.couponRef.reload();
+          });
       });
   }
 
@@ -140,6 +146,7 @@ export class CouponsComponent {
         this.httpService
           .create<CouponRequest>('/coupons', result)
           .subscribe(() => {
+            this.notifyService.show('shopping.coupons.notify.added');
             this.couponRef.reload();
           });
       });
