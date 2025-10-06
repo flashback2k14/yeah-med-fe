@@ -156,6 +156,12 @@
     }
   },
   "shopping": {
+    "coupons": {
+      "title": "Coupons",
+      "loading": "Loading coupons...",
+      "error": "Unknown error",
+      "no-data": "No coupons found."
+    },
     "coupon": {
       "name": {
         "label": "Name",
