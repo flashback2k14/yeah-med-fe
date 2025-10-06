@@ -160,7 +160,12 @@
       "title": "Coupons",
       "loading": "Loading coupons...",
       "error": "Unknown error",
-      "no-data": "No coupons found."
+      "no-data": "No coupons found.",
+      "notify": {
+        "added": "New coupon added.",
+        "edit": "Coupon successfully edited.",
+        "deleted": "Coupon successfully deleted."
+      }
     },
     "coupon": {
       "name": {
