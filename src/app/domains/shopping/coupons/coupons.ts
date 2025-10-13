@@ -43,7 +43,12 @@ import { CouponSheet } from '../sheets/coupon-sheet';
               <mat-icon (click)="handleDelete(coupon)">delete</mat-icon>
             </div>
             <div matListItemTitle>{{ coupon.name }}</div>
-            <div matListItemLine>{{ coupon.expiredAt | date }}</div>
+            <div matListItemLine>
+              {{ coupon.expiredAt | date }}
+              @if(coupon.notes) {
+              <span> - {{ coupon.notes }}</span>
+              }
+            </div>
             @if(coupon.website) {
             <div matListItemLine>
               <a [href]="coupon.website" target="_blank" rel="noreferrer">{{

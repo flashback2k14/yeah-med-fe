@@ -30,6 +30,10 @@
       font: var(--mat-sys-body-large);
     }
 
+    div[matListItemLine] {
+      font: var(--mat-sys-body-medium);
+    }
+
     div[matListItemMeta] {
       display: flex;
       align-items: center;
