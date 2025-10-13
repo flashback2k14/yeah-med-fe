@@ -15,7 +15,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { NotifyService } from '../../../core/services/notify-service';
 import { HttpService } from '../../../core/services/http-service';
 import { IsExpiredPipe } from '../../dashboard/pipes/table-pipes';
-import { CouponResponse, CouponRequest } from '../models';
+import { CouponResponse, CouponRequest, createCouponRequest } from '../models';
 import { CouponSheet } from '../sheets/coupon-sheet';
 
 @Component({
@@ -136,7 +136,11 @@ export class CouponsComponent {
 
   openCouptonSheet(): void {
     this.bottomSheet
-      .open(CouponSheet, { data: {}, hasBackdrop: true, disableClose: true })
+      .open(CouponSheet, {
+        data: createCouponRequest(),
+        hasBackdrop: true,
+        disableClose: true,
+      })
       .afterDismissed()
       .subscribe((result: CouponRequest) => {
         if (!result) {

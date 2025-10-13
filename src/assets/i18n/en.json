@@ -180,6 +180,10 @@
         "label": "Website",
         "placeholder": "Enter website..."
       },
+      "notes": {
+        "label": "Notes",
+        "placeholder": "Enter notes..."
+      },
       "actions": {
         "close": "Close",
         "save": "Save"
