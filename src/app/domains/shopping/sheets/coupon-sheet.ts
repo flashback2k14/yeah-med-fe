@@ -1,22 +1,31 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import {
   MAT_BOTTOM_SHEET_DATA,
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MatDatepickerInputEvent,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { CouponRequest, CouponResponse } from '../models';
+import { Control, form, required, submit } from '@angular/forms/signals';
 
 @Component({
   selector: 'ym-shopping-coupon-sheet',
   template: `
     <ng-container *transloco="let t; prefix: 'shopping.coupon'">
-      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <form>
         <div class="container">
           <!-- NAME -->
           <mat-form-field appearance="outline" class="full">
@@ -26,13 +35,14 @@ import { CouponRequest, CouponResponse } from '../models';
               type="text"
               [placeholder]="t('name.placeholder')"
               required=""
-              name="name"
-              [(ngModel)]="data.name"
+              [control]="dataForm.name"
               autofocus
             />
           </mat-form-field>
 
           <!-- EXPIRED AT -->
+
+          <!-- NOW WORKING AS EXPECTED :-/ -->
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('expiredAt.label') }}</mat-label>
             <input
@@ -42,6 +52,7 @@ import { CouponRequest, CouponResponse } from '../models';
               required=""
               name="expiredAt"
               [(ngModel)]="data.expiredAt"
+              (dateChange)="onDateChanged($event)"
             />
             <mat-datepicker-toggle
               matIconSuffix
@@ -57,8 +68,18 @@ import { CouponRequest, CouponResponse } from '../models';
               matInput
               type="url"
               [placeholder]="t('website.placeholder')"
-              name="website"
-              [(ngModel)]="data.website"
+              [control]="dataForm.website"
+            />
+          </mat-form-field>
+
+          <!-- NOTES -->
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>{{ t('notes.label') }}</mat-label>
+            <input
+              matInput
+              type="text"
+              [placeholder]="t('notes.placeholder')"
+              [control]="dataForm.notes"
             />
           </mat-form-field>
 
@@ -66,7 +87,13 @@ import { CouponRequest, CouponResponse } from '../models';
             <button matButton (click)="close()">
               {{ t('actions.close') }}
             </button>
-            <button type="submit" matButton>{{ t('actions.save') }}</button>
+            <button
+              matButton
+              [disabled]="!dataForm().valid()"
+              (click)="onSubmit()"
+            >
+              {{ t('actions.save') }}
+            </button>
           </div>
         </div>
       </form>
@@ -88,6 +115,7 @@ import { CouponRequest, CouponResponse } from '../models';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    Control,
     FormsModule,
     MatButtonModule,
     MatDatepickerModule,
@@ -102,15 +130,27 @@ export class CouponSheet {
     inject<MatBottomSheetRef<CouponSheet, CouponRequest>>(MatBottomSheetRef);
   protected readonly data = inject<CouponResponse>(MAT_BOTTOM_SHEET_DATA);
 
+  protected dataModel = signal<CouponResponse>(this.data);
+  protected dataForm = form(this.dataModel, (path) => {
+    required(path.name);
+    required(path.expiredAt);
+  });
+
+  onDateChanged(evt: MatDatepickerInputEvent<Date>): void {
+    // FIXME: angular material datepicker can't handle signal forms at the moment: 13102025
+    this.dataForm.expiredAt().value.set(evt.value ?? new Date(Date.now()));
+  }
+
   close(): void {
     this.bottomSheetRef.dismiss();
   }
 
-  onSubmit(f: NgForm): void {
-    if (f.valid) {
+  onSubmit(): void {
+    submit(this.dataForm, async (form) => {
       this.bottomSheetRef.dismiss({
-        ...f.value,
-      } as CouponRequest);
-    }
+        ...form().value(),
+      });
+      return null;
+    });
   }
 }
