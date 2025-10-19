@@ -7,7 +7,10 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MatDatepickerInputEvent,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -19,14 +22,16 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
 
 import { AutocompleteComponent } from '../../../shared/components/autocomplete/autocomplete';
+import { MedFormData, TableRowRequest } from '../models';
+import { Field, form, required, submit } from '@angular/forms/signals';
 
 @Component({
   selector: 'ym-add-modal',
   template: `
     <ng-container *transloco="let t; prefix: 'dashboard.add-modal'">
-      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <form>
         <h2 mat-dialog-title>{{ t('title') }}</h2>
-        
+
         <mat-dialog-content class="mat-typography">
           <!-- NAME -->
           <mat-form-field appearance="outline" class="full">
@@ -35,9 +40,8 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
               matInput
               type="text"
               [placeholder]="t('name.placeholder')"
+              [field]="dataForm.name"
               required=""
-              name="name"
-              ngModel
               autofocus
             />
           </mat-form-field>
@@ -51,7 +55,8 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
               [placeholder]="t('expiredAt.placeholder')"
               required=""
               name="expiredAt"
-              ngModel
+              [(ngModel)]="data.expiredAt"
+              (dateChange)="onDateChanged($event)"
             />
             <mat-datepicker-toggle
               matIconSuffix
@@ -63,8 +68,8 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
           <!-- CATEGORY -->
           <ym-autocomplete
             class="half"
-            [all]="deps.categories"
-            [(selectedEntries)]="selectedCategories"
+            [all]="data.selectableCategories"
+            [field]="dataForm.selectedCategories"
             labelKey="dashboard.add-modal.category.label"
             placeholderKey="dashboard.add-modal.category.placeholder"
           />
@@ -72,8 +77,8 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
           <!-- LOCATION -->
           <ym-autocomplete
             class="half spacer"
-            [all]="deps.locations"
-            [(selectedEntries)]="selectedLocations"
+            [all]="data.selectableLocations"
+            [field]="dataForm.selectedLocations"
             labelKey="dashboard.add-modal.location.label"
             placeholderKey="dashboard.add-modal.location.placeholder"
           />
@@ -83,9 +88,8 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
             <mat-label>{{ t('description.label') }}</mat-label>
             <textarea
               matInput
-              name="description"
               [placeholder]="t('description.placeholder')"
-              ngModel
+              [field]="dataForm.description"
             ></textarea>
           </mat-form-field>
 
@@ -96,8 +100,7 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
               matInput
               type="text"
               [placeholder]="t('productId.placeholder')"
-              name="productId"
-              ngModel
+              [field]="dataForm.productId"
             />
           </mat-form-field>
         </mat-dialog-content>
@@ -109,7 +112,11 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
               <button matButton [mat-dialog-close]>
                 {{ t('actions.close') }}
               </button>
-              <button type="submit" matButton>
+              <button
+                matButton
+                [disabled]="!dataForm().valid()"
+                (click)="onSubmit()"
+              >
                 {{ t('actions.save') }}
               </button>
             </div>
@@ -121,42 +128,57 @@ import { AutocompleteComponent } from '../../../shared/components/autocomplete/a
   styleUrl: './modals.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    AutocompleteComponent,
+    Field,
     FormsModule,
-    TranslocoDirective,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    AutocompleteComponent,
+    TranslocoDirective,
   ],
 })
 export class AddModal {
   protected readonly dialogRef = inject(MatDialogRef<AddModal>);
-  protected readonly deps = inject<{
-    categories: string[];
-    locations: string[];
-  }>(MAT_DIALOG_DATA);
+  protected readonly data = inject<MedFormData>(MAT_DIALOG_DATA);
 
-  protected selectedCategories = signal<string[]>([]);
-  protected selectedLocations = signal<string[]>([]);
+  protected dataModel = signal<MedFormData>(this.data);
+  protected dataForm = form(this.dataModel, (path) => {
+    required(path.name);
+    required(path.expiredAt);
+    required(path.selectedCategories);
+    required(path.selectedLocations);
+  });
 
-  onSubmit(f: NgForm) {
-    if (
-      this.selectedCategories().length === 0 ||
-      this.selectedLocations().length === 0
-    ) {
-      return;
-    }
+  onDateChanged(evt: MatDatepickerInputEvent<Date>): void {
+    // FIXME: angular material datepicker can't handle signal forms at the moment: 13102025
+    this.dataForm.expiredAt().value.set(evt.value ?? new Date(Date.now()));
+  }
 
-    // TODO: change Backend to handle multi categories and locations
-    if (f.valid) {
-      this.dialogRef.close({
-        ...f.value,
-        category: this.selectedCategories().join(','),
-        location: this.selectedLocations().join(','),
-      });
-    }
+  onSubmit() {
+    submit(this.dataForm, async (form) => {
+      const data = form().value();
+
+      // TODO: change Backend to handle multi categories and locations
+      const extended = {
+        ...data,
+        category: data.selectedCategories.join(','),
+        location: data.selectedLocations.join(','),
+      } as MedFormData;
+
+      const {
+        selectableCategories,
+        selectableLocations,
+        selectedCategories,
+        selectedLocations,
+        ...rest
+      } = extended;
+
+      this.dialogRef.close(rest as TableRowRequest);
+
+      return null;
+    });
   }
 }

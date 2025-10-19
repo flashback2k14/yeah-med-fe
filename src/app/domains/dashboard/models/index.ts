@@ -14,3 +14,28 @@ export type TableRow = {
 };
 
 export type TableRowRequest = Omit<TableRow, 'id' | 'createdAt'>;
+
+export interface MedFormData extends TableRowRequest {
+  selectableCategories: string[];
+  selectableLocations: string[];
+  selectedCategories: string[];
+  selectedLocations: string[];
+}
+
+export const createMedFormData = (
+  categories: string[],
+  locations: string[]
+) => {
+  return {
+    name: '',
+    expiredAt: new Date(Date.now()),
+    location: '',
+    category: '',
+    description: '',
+    productId: '',
+    selectableCategories: categories,
+    selectableLocations: locations,
+    selectedCategories: new Array<string>(),
+    selectedLocations: new Array<string>(),
+  } as MedFormData;
+};

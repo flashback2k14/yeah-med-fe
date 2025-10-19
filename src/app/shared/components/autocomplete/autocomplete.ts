@@ -17,6 +17,7 @@ import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { FormValueControl } from '@angular/forms/signals';
 
 @Component({
   selector: 'ym-autocomplete',
@@ -25,7 +26,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
       <mat-form-field appearance="outline">
         <mat-label>{{ t(labelKey()) }}</mat-label>
         <mat-chip-grid #chipGrid required="">
-          @for (entry of selectedEntries(); track $index) {
+          @for (entry of value(); track $index) {
           <mat-chip-row (removed)="remove(entry)">
             {{ entry }}
             <button matChipRemove [attr.aria-label]="'remove ' + entry">
@@ -70,11 +71,11 @@ import { TranslocoDirective } from '@jsverse/transloco';
     TranslocoDirective,
   ],
 })
-export class AutocompleteComponent {
+export class AutocompleteComponent implements FormValueControl<string[]> {
   readonly labelKey = input('');
   readonly placeholderKey = input('');
   readonly all = model<string[]>([]);
-  readonly selectedEntries = model<string[]>([]);
+  readonly value = model<string[]>([]);
 
   readonly currentInput = model('');
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -92,7 +93,7 @@ export class AutocompleteComponent {
     const value = (event.value || '').trim();
 
     if (value) {
-      this.selectedEntries.update((entries) => [...entries, value]);
+      this.value.update((entries) => [...entries, value]);
     }
 
     this.currentInput.set('');
@@ -100,7 +101,7 @@ export class AutocompleteComponent {
   }
 
   remove(entry: string): void {
-    this.selectedEntries.update((entries) => {
+    this.value.update((entries) => {
       const index = entries.indexOf(entry);
       if (index < 0) {
         return entries;
@@ -112,10 +113,7 @@ export class AutocompleteComponent {
   }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {
-    this.selectedEntries.update((entries) => [
-      ...entries,
-      event.option.viewValue,
-    ]);
+    this.value.update((entries) => [...entries, event.option.viewValue]);
     this.currentInput.set('');
     event.option.deselect();
   }

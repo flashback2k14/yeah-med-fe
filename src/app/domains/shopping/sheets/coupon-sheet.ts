@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { CouponRequest, CouponResponse } from '../models';
-import { Control, form, required, submit } from '@angular/forms/signals';
+import { Field, form, required, submit } from '@angular/forms/signals';
 
 @Component({
   selector: 'ym-shopping-coupon-sheet',
@@ -35,14 +35,12 @@ import { Control, form, required, submit } from '@angular/forms/signals';
               type="text"
               [placeholder]="t('name.placeholder')"
               required=""
-              [control]="dataForm.name"
+              [field]="dataForm.name"
               autofocus
             />
           </mat-form-field>
 
           <!-- EXPIRED AT -->
-
-          <!-- NOW WORKING AS EXPECTED :-/ -->
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('expiredAt.label') }}</mat-label>
             <input
@@ -68,7 +66,7 @@ import { Control, form, required, submit } from '@angular/forms/signals';
               matInput
               type="url"
               [placeholder]="t('website.placeholder')"
-              [control]="dataForm.website"
+              [field]="dataForm.website"
             />
           </mat-form-field>
 
@@ -79,7 +77,7 @@ import { Control, form, required, submit } from '@angular/forms/signals';
               matInput
               type="text"
               [placeholder]="t('notes.placeholder')"
-              [control]="dataForm.notes"
+              [field]="dataForm.notes"
             />
           </mat-form-field>
 
@@ -115,7 +113,7 @@ import { Control, form, required, submit } from '@angular/forms/signals';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    Control,
+    Field,
     FormsModule,
     MatButtonModule,
     MatDatepickerModule,

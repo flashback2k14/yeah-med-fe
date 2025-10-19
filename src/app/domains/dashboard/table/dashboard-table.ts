@@ -24,7 +24,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { TranslocoDirective } from '@jsverse/transloco';
 
 import { TableRow } from '../models';
-import { IsExpiredPipe, SplitPipe } from '../pipes/table-pipes';
+import { IsExpiredPipe, SplitPipe } from '../../../shared/pipes';
 
 @Component({
   selector: 'ym-dashboard-table',
