@@ -14,7 +14,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
 
 import { NotifyService } from '../../../core/services/notify-service';
 import { HttpService } from '../../../core/services/http-service';
-import { IsExpiredPipe } from '../../dashboard/pipes/table-pipes';
+import { IsExpiredPipe } from '../../../shared/pipes';
 import { CouponResponse, CouponRequest, createCouponRequest } from '../models';
 import { CouponSheet } from '../sheets/coupon-sheet';
 

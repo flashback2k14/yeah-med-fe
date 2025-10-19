@@ -10,7 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DashboardTableComponent } from './table/dashboard-table';
-import { TableRow, TableRowRequest } from './models';
+import {
+  createMedFormData,
+  MedFormData,
+  TableRow,
+  TableRowRequest,
+} from './models';
 import { HttpService } from '../../core/services/http-service';
 import { NotifyService } from '../../core/services/notify-service';
 import { ShowModal } from './modals/show-modal';
@@ -91,10 +96,7 @@ export class DashboardComponent {
   protected handleAdd(): void {
     this.dialog
       .open(AddModal, {
-        data: {
-          categories: this.categories(),
-          locations: this.locations(),
-        },
+        data: createMedFormData(this.categories(), this.locations()),
         hasBackdrop: true,
         disableClose: true,
       })
@@ -125,10 +127,13 @@ export class DashboardComponent {
     this.dialog
       .open(EditModal, {
         data: {
-          selectedRow: JSON.parse(JSON.stringify(row)),
-          categories: this.categories(),
-          locations: this.locations(),
-        },
+          ...JSON.parse(JSON.stringify(row)),
+          selectableCategories: this.categories(),
+          selectableLocations: this.locations(),
+          // TODO: change Backend to handle multi categories and locations
+          selectedCategories: row.category.split(','),
+          selectedLocations: row.location.split(','),
+        } as MedFormData,
         hasBackdrop: true,
         disableClose: true,
       })
@@ -137,7 +142,6 @@ export class DashboardComponent {
         if (!result) {
           return;
         }
-
         this.httpService
           .update<TableRowRequest>(`/meds/${row.id}`, result)
           .subscribe(() => {
