@@ -1,0 +1,233 @@
+{
+  "nav": {
+    "title": "Yeah! Med",
+    "dashboard": "Übersicht",
+    "shopping": "Einkaufen",
+    "settings": "Einstellungen",
+    "actions": {
+      "login": "Anmelden",
+      "signup": "Registrieren",
+      "logout": "Abmelden"
+    }
+  },
+  "footer": {
+    "me": "Entwickelt von flashback2k14"
+  },
+  "notification": {
+    "auth": {
+      "signin": "Anmeldung mit Benutzer {{email}}...",
+      "signup": "Registrierung mit Benutzer {{email}}...",
+      "logout": "Abmeldung mit Benutzer {{email}}...",
+      "redirect": "Du bist nicht angemeldet. Weitergeleitet.",
+      "password-mismatch": "Passwörter stimmen nicht überein."
+    },
+    "error": {
+      "default-http": "Unbekannter Fehler."
+    }
+  },
+  "signin": {
+    "title": "Bitte gib deine Anmeldedaten ein",
+    "email": {
+      "label": "E-Mail",
+      "placeholder": "Bitte gib deine E-Mail ein..."
+    },
+    "password": {
+      "label": "Passwort",
+      "placeholder": "Bitte gib dein Passwort ein..."
+    },
+    "submit": "Anmelden"
+  },
+  "signup": {
+    "title": "Bitte gib deine Registrierungsdaten ein",
+    "email": {
+      "label": "E-Mail",
+      "placeholder": "Bitte gib deine E-Mail ein..."
+    },
+    "password": {
+      "label": "Passwort",
+      "placeholder": "Bitte gib dein Passwort ein..."
+    },
+    "passwordAgain": {
+      "label": "Passwort wiederholen",
+      "placeholder": "Bitte gib dein Passwort erneut ein..."
+    },
+    "submit": "Registrieren"
+  },
+  "dashboard": {
+    "loading": "Lädt...",
+    "no-data": "Keine Daten verfügbar.",
+    "table": {
+      "added": "Neues Medikament hinzugefügt.",
+      "edit": "Medikament erfolgreich bearbeitet.",
+      "deleted": "Medikament erfolgreich gelöscht.",
+      "delete-and-added": "Medikament gelöscht und zur Einkaufsliste hinzugefügt.",
+      "filter": {
+        "name": {
+          "label": "Nach Name filtern",
+          "placeholder": "Bitte gib den Namen des Medikaments ein..."
+        },
+        "category": {
+          "label": "Nach Kategorie filtern",
+          "placeholder": "Bitte gib die Kategorie des Medikaments ein..."
+        }
+      }
+    },
+    "add-modal": {
+      "title": "Neues Medikament hinzufügen",
+      "name": {
+        "label": "Name",
+        "placeholder": "Name eingeben..."
+      },
+      "description": {
+        "label": "Beschreibung",
+        "placeholder": "Beschreibung eingeben..."
+      },
+      "location": {
+        "label": "Ort",
+        "placeholder": "Ort eingeben..."
+      },
+      "category": {
+        "label": "Kategorie",
+        "placeholder": "Kategorie eingeben..."
+      },
+      "expiredAt": {
+        "label": "Ablaufdatum",
+        "placeholder": "Ablaufdatum eingeben..."
+      },
+      "productId": {
+        "label": "Produktnummer",
+        "placeholder": "Produktnummer eingeben..."
+      },
+      "actions": {
+        "required": "* - erforderlich",
+        "close": "Schließen",
+        "save": "Speichern"
+      }
+    },
+    "edit-modal": {
+      "title": "Medikament bearbeiten",
+      "name": {
+        "label": "Name",
+        "placeholder": "Name eingeben..."
+      },
+      "description": {
+        "label": "Beschreibung",
+        "placeholder": "Beschreibung eingeben..."
+      },
+      "location": {
+        "label": "Ort",
+        "placeholder": "Ort eingeben..."
+      },
+      "category": {
+        "label": "Kategorie",
+        "placeholder": "Kategorie eingeben..."
+      },
+      "expiredAt": {
+        "label": "Ablaufdatum",
+        "placeholder": "Ablaufdatum eingeben..."
+      },
+      "productId": {
+        "label": "Produktnummer",
+        "placeholder": "Produktnummer eingeben..."
+      },
+      "actions": {
+        "close": "Schließen",
+        "save": "Bearbeiten"
+      }
+    },
+    "delete-modal": {
+      "title": "Bist du sicher, dass du das Medikament löschen möchtest?",
+      "actions": {
+        "no": "Nein",
+        "yes": "Ja"
+      }
+    },
+    "show-modal": {
+      "title": "Medikament",
+      "labels": {
+        "name": "Name",
+        "desc": "Beschreibung",
+        "catLoc": "Kategorie / Ort",
+        "expiredAt": "Ablaufdatum",
+        "productId": "Produktnummer"
+      },
+      "actions": {
+        "close": "Schließen"
+      }
+    }
+  },
+  "shopping": {
+    "coupons": {
+      "title": "Gutscheine",
+      "loading": "Lade Gutscheine...",
+      "error": "Unbekannter Fehler",
+      "no-data": "Keine Gutscheine gefunden.",
+      "notify": {
+        "added": "Neuer Gutschein hinzugefügt.",
+        "edit": "Gutschein erfolgreich bearbeitet.",
+        "deleted": "Gutschein erfolgreich gelöscht."
+      }
+    },
+    "coupon": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Name eingeben..."
+      },
+      "expiredAt": {
+        "label": "Ablaufdatum",
+        "placeholder": "Ablaufdatum eingeben..."
+      },
+      "website": {
+        "label": "Webseite",
+        "placeholder": "Webseite eingeben..."
+      },
+      "notes": {
+        "label": "Notizen",
+        "placeholder": "Notizen eingeben..."
+      },
+      "actions": {
+        "close": "Schließen",
+        "save": "Speichern"
+      }
+    },
+    "shopping-list": {
+      "title": "Einkaufsliste",
+      "loading": "Lade Einträge...",
+      "error": "Unbekannter Fehler",
+      "no-data": "Keine Einträge gefunden.",
+      "notify": {
+        "added": "Neuer Eintrag hinzugefügt.",
+        "edit": "Eintrag erfolgreich bearbeitet.",
+        "deleted": "Eintrag erfolgreich gelöscht."
+      }
+    },
+    "shopping-entry": {
+       "name": {
+        "label": "Name",
+        "placeholder": "Name eingeben..."
+      },
+      "company": {
+        "label": "Firma",
+        "placeholder": "Firma eingeben..."
+      },
+      "actions": {
+        "close": "Schließen",
+        "save": "Speichern"
+      }
+    }
+  },
+  "settings": {
+    "information": {
+      "title": "Informationen",
+      "version": "App-Version: {{version}}",
+      "apiVersion": "API-Version: {{version}}",
+      "username": "Benutzername: {{username}}"
+    }
+  },
+  "404": {
+    "title": "404",
+    "line1": "Etwas fehlt.",
+    "line2": "Entschuldigung, diese Seite konnte nicht gefunden werden.",
+    "button": "Zurück zur Übersicht"
+  }
+}
