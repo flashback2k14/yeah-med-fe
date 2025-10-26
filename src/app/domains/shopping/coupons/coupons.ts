@@ -2,20 +2,17 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 
-import {
-  MatBottomSheet,
-  MatBottomSheetModule,
-} from '@angular/material/bottom-sheet';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { TranslocoDirective } from '@jsverse/transloco';
 
+import { CouponResponse, CouponRequest, createCouponRequest } from '../models';
 import { NotifyService } from '../../../core/services/notify-service';
 import { HttpService } from '../../../core/services/http-service';
 import { IsExpiredPipe } from '../../../shared/pipes';
-import { CouponResponse, CouponRequest, createCouponRequest } from '../models';
 import { CouponSheet } from '../sheets/coupon-sheet';
 
 @Component({
@@ -81,7 +78,6 @@ import { CouponSheet } from '../sheets/coupon-sheet';
   imports: [
     DatePipe,
     IsExpiredPipe,
-    MatBottomSheetModule,
     MatButtonModule,
     MatDividerModule,
     MatIconModule,

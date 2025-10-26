@@ -2,12 +2,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   inject,
 } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { combineLatest } from 'rxjs';
 
 import { DashboardTableComponent } from './table/dashboard-table';
 import {
@@ -19,9 +21,10 @@ import {
 import { HttpService } from '../../core/services/http-service';
 import { NotifyService } from '../../core/services/notify-service';
 import { ShowModal } from './modals/show-modal';
-import { DeleteModal } from './modals/delete-modal';
+import { DeleteModal, DeleteModalReturnType } from './modals/delete-modal';
 import { AddModal } from './modals/add-modal';
 import { EditModal } from './modals/edit-modal';
+import { ShoppingListRequest, ShoppingListResponse } from '../shopping/models';
 
 @Component({
   selector: 'ym-dashboard',
@@ -54,6 +57,7 @@ import { EditModal } from './modals/edit-modal';
 export class DashboardComponent {
   private readonly notifyService = inject(NotifyService);
   private readonly httpService = inject(HttpService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly dialog = inject(MatDialog);
 
   protected dataRef = rxResource({
@@ -159,12 +163,31 @@ export class DashboardComponent {
         disableClose: true,
       })
       .afterClosed()
-      .subscribe((result) => {
+      .subscribe((result: DeleteModalReturnType) => {
         if (result) {
-          this.httpService.delete(`/meds/${row.id}`).subscribe(() => {
-            this.notifyService.show('dashboard.table.deleted');
-            this.refresh();
-          });
+          if (result === 'ONLY_DELETE') {
+            this.httpService.delete(`/meds/${row.id}`).subscribe(() => {
+              this.notifyService.show('dashboard.table.deleted');
+              this.refresh();
+            });
+          }
+
+          if (result === 'DELETE_AND_ADD') {
+            combineLatest({
+              delete: this.httpService.delete<{ message: string }>(
+                `/meds/${row.id}`
+              ),
+              add: this.httpService.create<
+                ShoppingListRequest,
+                ShoppingListResponse
+              >(`/shopping-lists`, { name: row.name, company: row.company }),
+            })
+              .pipe(takeUntilDestroyed(this.destroyRef))
+              .subscribe(() => {
+                this.notifyService.show('dashboard.table.delete-and-added');
+                this.refresh();
+              });
+          }
         }
       });
   }

@@ -109,7 +109,7 @@ import { Field, form, required, submit } from '@angular/forms/signals';
           <div class="actions">
             <span>{{ t('actions.required') }}</span>
             <div>
-              <button matButton [mat-dialog-close]>
+              <button matButton mat-dialog-close>
                 {{ t('actions.close') }}
               </button>
               <button

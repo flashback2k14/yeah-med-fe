@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { CouponsComponent } from './coupons/coupons';
+import { ShoppingListComponent } from './shopping-list/shopping-list';
 
 @Component({
   selector: 'ym-shopping',
@@ -11,20 +12,12 @@ import { CouponsComponent } from './coupons/coupons';
       </div>
 
       <div class="right">
-        <div class="title">
-          <h3>Shopping list</h3>
-        </div>
-
-        <div class="list">
-          <h1>Coming soon...</h1>
-        </div>
-
-        <div class="actions"></div>
+        <ym-shopping-list />
       </div>
     </div>
   `,
   styleUrl: './shopping.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CouponsComponent],
+  imports: [CouponsComponent, ShoppingListComponent],
 })
 export class ShoppingComponent {}

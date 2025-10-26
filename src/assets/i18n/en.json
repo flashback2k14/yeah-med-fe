@@ -60,6 +60,7 @@
       "added": "New medication added.",
       "edit": "Medication successfully edited.",
       "deleted": "Medication successfully deleted.",
+      "delete-and-added": "Medication successfully deleted and added to the shopping list.",
       "filter": {
         "name": {
           "label": "Filter by name",
@@ -183,6 +184,31 @@
       "notes": {
         "label": "Notes",
         "placeholder": "Enter notes..."
+      },
+      "actions": {
+        "close": "Close",
+        "save": "Save"
+      }
+    },
+    "shopping-list": {
+      "title": "Shopping list",
+      "loading": "Loading entries...",
+      "error": "Unknown error",
+      "no-data": "No entries found.",
+      "notify": {
+        "added": "New entry added.",
+        "edit": "Entry successfully edited.",
+        "deleted": "Entry successfully deleted."
+      }
+    },
+    "shopping-entry": {
+       "name": {
+        "label": "Name",
+        "placeholder": "Enter name..."
+      },
+      "company": {
+        "label": "Company",
+        "placeholder": "Enter company..."
       },
       "actions": {
         "close": "Close",

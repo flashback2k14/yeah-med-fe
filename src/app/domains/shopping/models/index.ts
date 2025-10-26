@@ -17,3 +17,22 @@ export const createCouponRequest = () => {
     expiredAt: new Date(Date.now()),
   } as CouponRequest;
 };
+
+export interface ShoppingListResponse {
+  id: string;
+  name: string;
+  company: string;
+  createdAt: Date;
+}
+
+export type ShoppingListRequest = Omit<
+  ShoppingListResponse,
+  'id' | 'createdAt'
+>;
+
+export const createShoppingListRequest = () => {
+  return {
+    name: '',
+    company: '',
+  } as ShoppingListRequest;
+};
