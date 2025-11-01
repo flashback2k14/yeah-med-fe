@@ -6,6 +6,7 @@
   @media screen and (max-width: 959px) {
     flex-direction: column;
     row-gap: 1rem;
+    height: unset;
   }
 
   .left {
@@ -20,7 +21,7 @@
     box-shadow: var(--mat-sys-level3);
 
     @media screen and (max-width: 959px) {
-      width: 100%;
+      width: calc(100vw - 1rem - 1rem);
       border-radius: unset;
       box-shadow: unset;
     }
@@ -37,7 +38,8 @@
     box-shadow: var(--mat-sys-level3);
 
     @media screen and (max-width: 959px) {
-      width: 100%;
+      width: calc(100vw - 1rem - 1rem);
+      padding: unset;
       border-radius: unset;
       box-shadow: unset;
     }
