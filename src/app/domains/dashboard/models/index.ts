@@ -8,6 +8,7 @@ export type TableRow = {
   categoryColor: string;
   count: string;
   company: string;
+  inUse: boolean;
   isExpired?: boolean;
   expiredAt: Date;
   createdAt: Date;
@@ -38,4 +39,9 @@ export const createMedFormData = (
     selectedCategories: new Array<string>(),
     selectedLocations: new Array<string>(),
   } as MedFormData;
+};
+
+export type InuseRespone = {
+  message: string;
+  update: TableRow;
 };

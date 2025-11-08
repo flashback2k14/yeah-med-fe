@@ -74,6 +74,11 @@ export const appConfig: ApplicationConfig = {
         'coupon',
         sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/coupon.svg')
       );
+
+      iconRegistry.addSvgIcon(
+        'inuse',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/inuse.svg')
+      );
     }),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),

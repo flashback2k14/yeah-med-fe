@@ -14,6 +14,7 @@ import { combineLatest } from 'rxjs';
 import { DashboardTableComponent } from './table/dashboard-table';
 import {
   createMedFormData,
+  InuseRespone,
   MedFormData,
   TableRow,
   TableRowRequest,
@@ -45,6 +46,7 @@ import { ShoppingListRequest, ShoppingListResponse } from '../shopping/models';
           (show)="handleShow($event)"
           (edit)="handleEdit($event)"
           (delete)="handleDelete($event)"
+          (inuse)="handleInuse($event)"
         />
         }
       </div>
@@ -189,6 +191,17 @@ export class DashboardComponent {
               });
           }
         }
+      });
+  }
+
+  protected handleInuse(row: TableRow): void {
+    this.httpService
+      .patch<TableRow, InuseRespone>(`/meds/${row.id}/inuse`, row)
+      .subscribe((result: InuseRespone) => {
+        this.notifyService.show(
+          `dashboard.table.inuse-${result.update.inUse ? 'on' : 'off'}`
+        );
+        this.refresh();
       });
   }
 

@@ -31,12 +31,9 @@ export class HttpService {
     });
   }
 
-  private patch<TData>(route: string, data: TData): Observable<TData>;
-  private patch<TData, TReturn>(
-    route: string,
-    data: TData
-  ): Observable<TReturn>;
-  private patch(route: string, data: unknown) {
+  patch<TData>(route: string, data: TData): Observable<TData>;
+  patch<TData, TReturn>(route: string, data: TData): Observable<TReturn>;
+  patch(route: string, data: unknown) {
     return this.http.patch(`${this.baseUrl}${route}`, data, {
       headers: this._getHeadersWithUser(),
     });

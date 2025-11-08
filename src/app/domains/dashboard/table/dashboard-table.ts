@@ -20,11 +20,12 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { TranslocoDirective } from '@jsverse/transloco';
 
-import { TableRow } from '../models';
 import { IsExpiredPipe, SplitPipe } from '../../../shared/pipes';
+import { TableRow } from '../models';
 
 @Component({
   selector: 'ym-dashboard-table',
@@ -75,7 +76,7 @@ import { IsExpiredPipe, SplitPipe } from '../../../shared/pipes';
             <!-- Name Column -->
             <ng-container matColumnDef="name" sticky>
               <th mat-header-cell *matHeaderCellDef class="first-column">
-                Name
+                {{ t('table.columns.name') }}
               </th>
               <td mat-cell *matCellDef="let element">
                 {{ element.name }}
@@ -84,7 +85,9 @@ import { IsExpiredPipe, SplitPipe } from '../../../shared/pipes';
 
             <!-- Category Column -->
             <ng-container matColumnDef="category">
-              <th mat-header-cell *matHeaderCellDef>Category</th>
+              <th mat-header-cell *matHeaderCellDef>
+                {{ t('table.columns.category') }}
+              </th>
               <td mat-cell *matCellDef="let element">
                 <mat-chip-set>
                   @for(category of element.category | split; track category) {
@@ -96,7 +99,9 @@ import { IsExpiredPipe, SplitPipe } from '../../../shared/pipes';
 
             <!-- Location Column -->
             <ng-container matColumnDef="location">
-              <th mat-header-cell *matHeaderCellDef>Location</th>
+              <th mat-header-cell *matHeaderCellDef>
+                {{ t('table.columns.location') }}
+              </th>
               <td mat-cell *matCellDef="let element">
                 <mat-chip-set>
                   @for(location of element.location | split; track location) {
@@ -108,7 +113,9 @@ import { IsExpiredPipe, SplitPipe } from '../../../shared/pipes';
 
             <!-- Expired At Column -->
             <ng-container matColumnDef="expiredAt">
-              <th mat-header-cell *matHeaderCellDef>Expired At</th>
+              <th mat-header-cell *matHeaderCellDef>
+                {{ t('table.columns.expiredAt') }}
+              </th>
               <td mat-cell *matCellDef="let element">
                 {{ element.expiredAt | date }}
               </td>
@@ -123,17 +130,38 @@ import { IsExpiredPipe, SplitPipe } from '../../../shared/pipes';
                 class="last-column"
               >
                 <div class="action-header" (click)="handleAdd()">
-                  <span>New</span>
                   <mat-icon>add</mat-icon>
+                  <span>{{ t('table.actions.new') }}</span>
                 </div>
               </th>
               <td mat-cell *matCellDef="let element">
                 <div class="action-cell">
-                  <mat-icon (click)="handleEdit(element)">edit</mat-icon>
-                  <mat-icon (click)="handleDelete(element)">delete</mat-icon>
-                  @if (element.description || element.productId) {
-                  <mat-icon (click)="handleShow(element)">info</mat-icon>
-                  }
+                  <button matButton [matMenuTriggerFor]="actionMenu">
+                    <mat-icon>menu</mat-icon>
+                    <span>{{ t('table.actions.title') }}</span>
+                  </button>
+                  <mat-menu #actionMenu="matMenu">
+                    <button mat-menu-item (click)="handleEdit(element)">
+                      <mat-icon>edit</mat-icon>
+                      <span>{{ t('table.actions.edit') }}</span>
+                    </button>
+                    <button mat-menu-item (click)="handleDelete(element)">
+                      <mat-icon>delete</mat-icon>
+                      <span>{{ t('table.actions.delete') }}</span>
+                    </button>
+                    <button mat-menu-item (click)="handleInuse(element)">
+                      <mat-icon svgIcon="inuse"></mat-icon>
+                      <span>{{ t('table.actions.inuse') }}</span>
+                    </button>
+                    <button
+                      mat-menu-item
+                      (click)="handleShow(element)"
+                      [disabled]="!(element.description || element.productId)"
+                    >
+                      <mat-icon>info</mat-icon>
+                      <span>{{ t('table.actions.more') }}</span>
+                    </button>
+                  </mat-menu>
                 </div>
               </td>
             </ng-container>
@@ -152,6 +180,7 @@ import { IsExpiredPipe, SplitPipe } from '../../../shared/pipes';
             <tr
               mat-row
               [class.expired]="row.expiredAt | isExpired"
+              [class.in-use]="row.inUse"
               *matRowDef="let row; columns: displayedColumns"
             ></tr>
           </table>
@@ -171,6 +200,7 @@ import { IsExpiredPipe, SplitPipe } from '../../../shared/pipes';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatMenuModule,
     MatSelectModule,
     MatTableModule,
     SplitPipe,
@@ -222,11 +252,13 @@ export class DashboardTableComponent {
   protected show = output<TableRow>();
   protected edit = output<TableRow>();
   protected delete = output<TableRow>();
+  protected inuse = output<TableRow>();
 
   protected handleAdd = () => this.add.emit();
   protected handleShow = (row: TableRow) => this.show.emit(row);
   protected handleEdit = (row: TableRow) => this.edit.emit(row);
   protected handleDelete = (row: TableRow) => this.delete.emit(row);
+  protected handleInuse = (row: TableRow) => this.inuse.emit(row);
 
   protected clearFilterByName(): void {
     this.filterByName.set('');

@@ -61,6 +61,8 @@
       "edit": "Medikament erfolgreich bearbeitet.",
       "deleted": "Medikament erfolgreich gelöscht.",
       "delete-and-added": "Medikament gelöscht und zur Einkaufsliste hinzugefügt.",
+      "inuse-on": "Medikament wird jetzt verwendet.",
+      "inuse-off": "Medikament wird jetzt nicht verwendet.",
       "filter": {
         "name": {
           "label": "Nach Name filtern",
@@ -70,6 +72,20 @@
           "label": "Nach Kategorie filtern",
           "placeholder": "Bitte gib die Kategorie des Medikaments ein..."
         }
+      },
+      "columns": {
+        "name": "Name",
+        "category": "Kategorie",
+        "location": "Ort",
+        "expiredAt": "Ablaufdatum"
+      },
+      "actions": {
+        "title": "Aktionen",
+        "new": "Neu",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "more": "Mehr",
+        "inuse": "In Verwendung"
       }
     },
     "add-modal": {

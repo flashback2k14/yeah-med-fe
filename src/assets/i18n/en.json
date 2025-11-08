@@ -61,6 +61,8 @@
       "edit": "Medication successfully edited.",
       "deleted": "Medication successfully deleted.",
       "delete-and-added": "Medication successfully deleted and added to the shopping list.",
+      "inuse-on": "Medication is now in usage.",
+      "inuse-off": "Medication is now not in usage.",
       "filter": {
         "name": {
           "label": "Filter by name",
@@ -70,6 +72,20 @@
           "label": "Filter by category",
           "placeholder": "Please enter the category of the medication..."
         }
+      },
+      "columns": {
+        "name": "Name",
+        "category": "Category",
+        "location": "Location",
+        "expiredAt": "Expired at"
+      },
+      "actions": {
+        "title": "Actions",
+        "new": "New",
+        "edit": "Edit",
+        "delete": "Delete",
+        "more": "More",
+        "inuse": "In usage"
       }
     },
     "add-modal": {
