@@ -230,6 +230,13 @@
         "close": "Schließen",
         "save": "Speichern"
       }
+    },
+    "delete-modal": {
+      "title": "Bist du sicher, dass du dieses Element löschen möchtest?",
+      "actions": {
+        "no": "Nein",
+        "yes": "Ja"
+      }
     }
   },
   "settings": {

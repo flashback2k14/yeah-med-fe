@@ -7,11 +7,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslocoDirective } from '@jsverse/transloco';
 
 import { CouponResponse, CouponRequest, createCouponRequest } from '../models';
 import { NotifyService } from '../../../core/services/notify-service';
 import { HttpService } from '../../../core/services/http-service';
+import { ShoppingDeleteModal } from '../modals/delete-modal';
 import { IsExpiredPipe } from '../../../shared/pipes';
 import { CouponSheet } from '../sheets/coupon-sheet';
 
@@ -89,6 +91,7 @@ export class CouponsComponent {
   private readonly notifyService = inject(NotifyService);
   private readonly bottomSheet = inject(MatBottomSheet);
   private readonly httpService = inject(HttpService);
+  private readonly dialog = inject(MatDialog);
 
   protected couponRef = rxResource({
     stream: () => this.httpService.get<CouponResponse[]>('/coupons'),
@@ -96,16 +99,21 @@ export class CouponsComponent {
   });
 
   handleDelete(coupon: CouponResponse) {
-    const confirmed = confirm(
-      'Are you sure to delete the coupon: ' + coupon.name + '?'
-    );
-
-    if (confirmed) {
-      this.httpService.delete('/coupons/' + coupon.id).subscribe(() => {
-        this.notifyService.show('shopping.coupons.notify.deleted');
-        this.couponRef.reload();
+    this.dialog
+      .open(ShoppingDeleteModal, {
+        data: coupon.name,
+        hasBackdrop: true,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.httpService.delete('/coupons/' + coupon.id).subscribe(() => {
+            this.notifyService.show('shopping.coupons.notify.deleted');
+            this.couponRef.reload();
+          });
+        }
       });
-    }
   }
 
   handleEdit(coupon: CouponResponse) {

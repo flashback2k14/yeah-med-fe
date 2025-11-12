@@ -6,10 +6,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslocoDirective } from '@jsverse/transloco';
 
 import { NotifyService } from '../../../core/services/notify-service';
 import { HttpService } from '../../../core/services/http-service';
+import { ShoppingDeleteModal } from '../modals/delete-modal';
 import { ShoppingSheet } from '../sheets/shopping-sheet';
 import {
   createShoppingListRequest,
@@ -79,6 +81,7 @@ export class ShoppingListComponent {
   private readonly notifyService = inject(NotifyService);
   private readonly bottomSheet = inject(MatBottomSheet);
   private readonly httpService = inject(HttpService);
+  private readonly dialog = inject(MatDialog);
 
   protected shoppingListRef = rxResource({
     stream: () =>
@@ -87,16 +90,23 @@ export class ShoppingListComponent {
   });
 
   handleDelete(entry: ShoppingListResponse) {
-    const confirmed = confirm(
-      'Are you sure to delete the entry: ' + entry.name + '?'
-    );
-
-    if (confirmed) {
-      this.httpService.delete('/shopping-lists/' + entry.id).subscribe(() => {
-        this.notifyService.show('shopping.shopping-list.notify.deleted');
-        this.shoppingListRef.reload();
+    this.dialog
+      .open(ShoppingDeleteModal, {
+        data: entry.name,
+        hasBackdrop: true,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.httpService
+            .delete('/shopping-lists/' + entry.id)
+            .subscribe(() => {
+              this.notifyService.show('shopping.shopping-list.notify.deleted');
+              this.shoppingListRef.reload();
+            });
+        }
       });
-    }
   }
 
   handleEdit(entry: ShoppingListResponse) {

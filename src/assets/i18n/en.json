@@ -230,6 +230,13 @@
         "close": "Close",
         "save": "Save"
       }
+    },
+    "delete-modal": {
+      "title": "Are you sure to delete this item?",
+      "actions": {
+        "no": "No",
+        "yes": "Yes"
+      }
     }
   },
   "settings": {
