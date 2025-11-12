@@ -4,6 +4,8 @@
 }
 
 .wrapper {
+  height: inherit;
+
   .half {
     width: calc(50% - 4px);
 
@@ -30,7 +32,7 @@
     @media screen and (max-width: 959px) {
       height: var(--ym-filter-container-height);
       margin-top: 6px;
-      margin-bottom: 8px;
+      margin-bottom: 0;
     }
 
     .mat-mdc-table-sticky-border-elem-left {

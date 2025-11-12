@@ -32,6 +32,7 @@ import { TableRow } from '../models';
   template: `
     <ng-container *transloco="let t; prefix: 'dashboard'">
       <div class="wrapper">
+        <!-- FILTER -->
         <mat-accordion>
           <mat-expansion-panel>
             <mat-expansion-panel-header (click)="toggle()">
@@ -233,13 +234,13 @@ export class DashboardTableComponent {
 
     if (isOpened) {
       if (isMobile) {
-        return 'calc(100vh - 222px - 96px - 88px - 32px)';
+        return 'calc(100vh - 222px - 96px - 54px)';
       } else {
-        return 'calc(100vh - 4px - 96px - 88px - 42px - 156px)';
+        return 'calc(100vh - 4px - 96px - 88px - 42px - 144px)';
       }
     } else {
       if (isMobile) {
-        return 'calc(100vh - 4px - 96px - 88px - 42px - 18px)';
+        return 'calc(100vh - 4px - 70px - 72px - 42px - 18px)';
       } else {
         return 'calc(100vh - 4px - 96px - 88px - 42px - 48px)';
       }

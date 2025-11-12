@@ -60,6 +60,25 @@ body {
   .mat-mdc-dialog-surface {
     border: 2px solid var(--mat-sys-primary);
   }
+
+  .mat-expansion-panel-body {
+    padding: 0 16px 0;
+  }
+
+  @media screen and (max-width: 959px) {
+    .mat-expansion-panel-body {
+      padding: 0 0.5rem;
+    }
+
+    .mdc-data-table__header-cell,
+    .mdc-data-table__cell {
+      padding: 0 8px;
+    }
+
+    .mat-column-actions {
+      padding: 0;
+    }
+  }
 }
 
 /* theming scrollbars */

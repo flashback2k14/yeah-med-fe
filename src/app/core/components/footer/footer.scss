@@ -1,6 +1,10 @@
 .container {
   padding: 16px;
 
+  @media screen and (max-width: 959px) {
+    padding: 8px;
+  }
+
   footer {
     display: flex;
     align-items: center;

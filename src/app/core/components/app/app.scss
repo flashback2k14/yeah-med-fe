@@ -25,7 +25,8 @@
   .container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 96px 1fr 88px;
+    grid-template-rows: 70px 1fr 72px;
+    grid-row-gap: 4px;
 
     ym-header {
       grid-area: 1 / 1 / 2 / 1;
