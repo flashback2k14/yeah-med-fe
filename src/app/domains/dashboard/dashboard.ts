@@ -118,6 +118,9 @@ export class DashboardComponent {
           .subscribe(() => {
             this.notifyService.show('dashboard.table.added');
             this.refresh();
+
+            // issue #15
+            // this.handleAdd();
           });
       });
   }

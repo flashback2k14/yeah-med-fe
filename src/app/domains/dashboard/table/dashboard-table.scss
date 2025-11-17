@@ -84,14 +84,18 @@
       width: 25%;
     }
 
-    .name-column {
-      font: var(--mat-sys-body-large);
-      font-weight: 700;
-    }
+    .mat-column-name {
+      cursor: pointer;
 
-    .company-column {
-      font: var(--mat-sys-label-medium);
-      font-style: italic;
+      .name-column {
+        font: var(--mat-sys-body-large);
+        font-weight: 700;
+      }
+
+      .company-column {
+        font: var(--mat-sys-label-medium);
+        font-style: italic;
+      }
     }
 
     .last-column {
