@@ -85,7 +85,9 @@
         "edit": "Bearbeiten",
         "delete": "Löschen",
         "more": "Mehr",
-        "inuse": "In Verwendung"
+        "inuse": "Nicht mehr verwenden",
+        "inuse-activate": "Verwenden",
+        "addToShopping": "Zur Einkaufsliste hinzufügen"
       }
     },
     "add-modal": {

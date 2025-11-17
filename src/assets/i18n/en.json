@@ -85,7 +85,9 @@
         "edit": "Edit",
         "delete": "Delete",
         "more": "More",
-        "inuse": "In usage"
+        "inuse": "Deactivate usage",
+        "inuse-activate": "Activate usage",
+        "addToShopping": "Add to shopping list"
       }
     },
     "add-modal": {

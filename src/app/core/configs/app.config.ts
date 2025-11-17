@@ -79,6 +79,13 @@ export const appConfig: ApplicationConfig = {
         'inuse',
         sanitizer.bypassSecurityTrustResourceUrl('../assets/svg/inuse.svg')
       );
+
+      iconRegistry.addSvgIcon(
+        'add-shopping',
+        sanitizer.bypassSecurityTrustResourceUrl(
+          '../assets/svg/add-shopping.svg'
+        )
+      );
     }),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),

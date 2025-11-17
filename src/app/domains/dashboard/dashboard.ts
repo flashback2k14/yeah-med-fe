@@ -47,6 +47,7 @@ import { ShoppingListRequest, ShoppingListResponse } from '../shopping/models';
           (edit)="handleEdit($event)"
           (delete)="handleDelete($event)"
           (inuse)="handleInuse($event)"
+          (addToShopping)="handleAddToShopping($event)"
         />
         }
       </div>
@@ -202,6 +203,17 @@ export class DashboardComponent {
           `dashboard.table.inuse-${result.update.inUse ? 'on' : 'off'}`
         );
         this.refresh();
+      });
+  }
+
+  protected handleAddToShopping(row: TableRow): void {
+    this.httpService
+      .create<ShoppingListRequest>('/shopping-lists', {
+        name: row.name,
+        company: row.company,
+      })
+      .subscribe(() => {
+        this.notifyService.show('shopping.shopping-list.notify.added');
       });
   }
 

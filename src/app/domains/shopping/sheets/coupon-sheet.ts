@@ -25,7 +25,7 @@ import { Field, form, required, submit } from '@angular/forms/signals';
   selector: 'ym-shopping-coupon-sheet',
   template: `
     <ng-container *transloco="let t; prefix: 'shopping.coupon'">
-      <form>
+      <form novalidate>
         <div class="container">
           <!-- NAME -->
           <mat-form-field appearance="outline" class="full">

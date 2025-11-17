@@ -1,0 +1,172 @@
+<ng-container *transloco="let t; prefix: 'dashboard'">
+  <div class="wrapper">
+    <!-- FILTER -->
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header (click)="toggle()">
+          Filter
+        </mat-expansion-panel-header>
+        <!-- FILTER: NAME -->
+        <mat-form-field appearance="outline" class="half">
+          <mat-label>{{ t('table.filter.name.label') }}</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="filterByName"
+            [placeholder]="t('table.filter.name.placeholder')"
+          />
+          <button matIconButton matSuffix (click)="clearFilterByName()">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+        <!-- FILTER: CATEGORY -->
+        <mat-form-field appearance="outline" class="half spacer">
+          <mat-label>{{ t('table.filter.category.label') }}</mat-label>
+          <mat-select [(ngModel)]="filterByCategory">
+            <mat-option disabled=""
+              >{{ t('table.filter.category.placeholder') }}</mat-option
+            >
+            @for(category of categories(); track category) {
+            <mat-option [value]="category">{{ category }}</mat-option>
+            }
+          </mat-select>
+          <button matIconButton matSuffix (click)="clearFilterByCategory()">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- TABLE -->
+    <div
+      [style.--ym-filter-container-height]="containerHeight()"
+      class="container"
+    >
+      <table mat-table [dataSource]="this.filteredRows()">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name" sticky>
+          <th mat-header-cell *matHeaderCellDef class="first-column">
+            {{ t('table.columns.name') }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- Category Column -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ t('table.columns.category') }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-chip-set>
+              @for(category of element.category | split; track category) {
+              <mat-chip>{{ category }}</mat-chip>
+              }
+            </mat-chip-set>
+          </td>
+        </ng-container>
+
+        <!-- Location Column -->
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ t('table.columns.location') }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-chip-set>
+              @for(location of element.location | split; track location) {
+              <mat-chip>{{ location }}</mat-chip>
+              }
+            </mat-chip-set>
+          </td>
+        </ng-container>
+
+        <!-- Expired At Column -->
+        <ng-container matColumnDef="expiredAt">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ t('table.columns.expiredAt') }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.expiredAt | date }}
+          </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions" stickyEnd>
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            aria-label="row actions"
+            class="last-column"
+          >
+            <div class="action-header" (click)="handleAdd()">
+              <mat-icon>add</mat-icon>
+              <span>{{ t('table.actions.new') }}</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="action-cell">
+              <!-- MENU BUTTON -->
+              <button matButton [matMenuTriggerFor]="actionMenu">
+                <mat-icon>menu</mat-icon>
+                <span>{{ t('table.actions.title') }}</span>
+              </button>
+              <!-- MENU ITEMS -->
+              <mat-menu #actionMenu="matMenu">
+                <button mat-menu-item (click)="handleEdit(element)">
+                  <mat-icon>edit</mat-icon>
+                  <span>{{ t('table.actions.edit') }}</span>
+                </button>
+                <button mat-menu-item (click)="handleDelete(element)">
+                  <mat-icon>delete</mat-icon>
+                  <span>{{ t('table.actions.delete') }}</span>
+                </button>
+                <mat-divider />
+                <button
+                  mat-menu-item
+                  (click)="handleShow(element)"
+                  [disabled]="!(element.description || element.productId)"
+                >
+                  <mat-icon>info</mat-icon>
+                  <span>{{ t('table.actions.more') }}</span>
+                </button>
+                <mat-divider />
+                <button mat-menu-item (click)="handleInuse(element)">
+                  <mat-icon svgIcon="inuse"></mat-icon>
+                  <span>
+                    {{ element.inUse ? t('table.actions.inuse') :
+                    t('table.actions.inuse-activate') }}
+                  </span>
+                </button>
+                <button mat-menu-item (click)="handleAddToShopping(element)">
+                  <mat-icon svgIcon="add-shopping"></mat-icon>
+                  <span>{{ t('table.actions.addToShopping') }}</span>
+                </button>
+              </mat-menu>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- HEADER ROW -->
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+          class="no-hover"
+        ></tr>
+
+        <!-- DATA ROW -->
+        <tr
+          mat-row
+          [class.expired]="row.expiredAt | isExpired"
+          [class.in-use]="row.inUse"
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
+
+        <!-- NO DATA ROW -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="5">
+            <h2 class="no-data">No data available.</h2>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ng-container>
