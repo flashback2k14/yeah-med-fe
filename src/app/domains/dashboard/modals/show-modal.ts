@@ -22,7 +22,15 @@ import { TableRow } from '../models';
         <label>{{ t('labels.name') }}</label>
         <mat-divider />
         <p>{{ selectedRow.name }}</p>
-
+        <!---->
+        @if(selectedRow.company) {
+        <label>{{ t('labels.company') }}</label>
+        <mat-divider />
+        <p>
+          {{ selectedRow.company }}
+        </p>
+        }
+        <!---->
         @if(selectedRow.description) {
         <label>{{ t('labels.desc') }}</label>
         <mat-divider />
@@ -30,7 +38,7 @@ import { TableRow } from '../models';
           {{ selectedRow.description }}
         </p>
         }
-
+        <!---->
         <label>{{ t('labels.catLoc') }}</label>
         <mat-divider />
         <p>{{ selectedRow.category }} / {{ selectedRow.location }}</p>
@@ -40,12 +48,20 @@ import { TableRow } from '../models';
         <p>
           {{ selectedRow.expiredAt | date : 'dd.MM.yyyy' }}
         </p>
-
+        <!---->
         @if(selectedRow.productId) {
         <label>{{ t('labels.productId') }}</label>
         <mat-divider />
         <p>
           {{ selectedRow.productId }}
+        </p>
+        }
+        <!---->
+        @if(selectedRow.count) {
+        <label>{{ t('labels.count') }}</label>
+        <mat-divider />
+        <p>
+          {{ selectedRow.count }}
         </p>
         }
       </mat-dialog-content>

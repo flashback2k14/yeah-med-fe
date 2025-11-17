@@ -108,6 +108,14 @@
         "label": "Kategorie",
         "placeholder": "Kategorie eingeben..."
       },
+      "company": {
+        "label": "Firma",
+        "placeholder": "Firmennamen eingeben..."
+      },
+      "count": {
+        "label": "Anzahl",
+        "placeholder": "Medikamentenanzahl eingeben..."
+      },
       "expiredAt": {
         "label": "Ablaufdatum",
         "placeholder": "Ablaufdatum eingeben..."
@@ -140,6 +148,14 @@
         "label": "Kategorie",
         "placeholder": "Kategorie eingeben..."
       },
+      "company": {
+        "label": "Firma",
+        "placeholder": "Firmennamen eingeben..."
+      },
+      "count": {
+        "label": "Anzahl",
+        "placeholder": "Medikamentenanzahl eingeben..."
+      },
       "expiredAt": {
         "label": "Ablaufdatum",
         "placeholder": "Ablaufdatum eingeben..."
@@ -167,7 +183,9 @@
         "desc": "Beschreibung",
         "catLoc": "Kategorie / Ort",
         "expiredAt": "Ablaufdatum",
-        "productId": "Produktnummer"
+        "productId": "Produktnummer",
+        "company": "Firma",
+        "count": "Anzahl"
       },
       "actions": {
         "close": "Schließen"

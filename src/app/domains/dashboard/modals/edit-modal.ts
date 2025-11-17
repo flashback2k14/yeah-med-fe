@@ -80,25 +80,47 @@ import { Field, form, required, submit } from '@angular/forms/signals';
             placeholderKey="dashboard.add-modal.location.placeholder"
           />
 
+          <!-- COMPANY -->
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>{{ t('company.label') }}</mat-label>
+            <input
+              matInput
+              type="text"
+              [placeholder]="t('company.placeholder')"
+              [field]="dataForm.company"
+            />
+          </mat-form-field>
+
           <!-- DESCRIPTION -->
           <mat-form-field appearance="outline" class="full">
             <mat-label>{{ t('description.label') }}</mat-label>
             <textarea
               matInput
-              name="description"
               [placeholder]="t('description.placeholder')"
               [field]="dataForm.description"
             ></textarea>
           </mat-form-field>
 
           <!-- PRODUCT ID -->
-          <mat-form-field appearance="outline" class="full">
+          <mat-form-field appearance="outline" class="half">
             <mat-label>{{ t('productId.label') }}</mat-label>
             <input
               matInput
               type="text"
               [placeholder]="t('productId.placeholder')"
               [field]="dataForm.productId"
+            />
+          </mat-form-field>
+
+          <!-- COUNT -->
+          <mat-form-field appearance="outline" class="half spacer">
+            <mat-label>{{ t('count.label') }}</mat-label>
+            <input
+              matInput
+              type="number"
+              min="0"
+              [placeholder]="t('count.placeholder')"
+              [field]="dataForm.count"
             />
           </mat-form-field>
         </mat-dialog-content>

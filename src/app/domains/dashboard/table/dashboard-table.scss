@@ -84,6 +84,16 @@
       width: 25%;
     }
 
+    .name-column {
+      font: var(--mat-sys-body-large);
+      font-weight: 700;
+    }
+
+    .company-column {
+      font: var(--mat-sys-label-medium);
+      font-style: italic;
+    }
+
     .last-column {
       width: 150px;
     }

@@ -108,6 +108,14 @@
         "label": "Category",
         "placeholder": "Enter category..."
       },
+      "company": {
+        "label": "Company",
+        "placeholder": "Enter company name..."
+      },
+      "count": {
+        "label": "Count",
+        "placeholder": "Enter medication count..."
+      },
       "expiredAt": {
         "label": "Expired at",
         "placeholder": "Enter expiration date..."
@@ -140,6 +148,14 @@
         "label": "Category",
         "placeholder": "Enter category..."
       },
+      "company": {
+        "label": "Company",
+        "placeholder": "Enter company name..."
+      },
+      "count": {
+        "label": "Count",
+        "placeholder": "Enter medication count..."
+      },
       "expiredAt": {
         "label": "Expired at",
         "placeholder": "Enter expiration date..."
@@ -167,7 +183,9 @@
         "desc": "Description",
         "catLoc": "Category / Location",
         "expiredAt": "Expired at",
-        "productId": "Product number"
+        "productId": "Product number",
+        "company": "Company",
+        "count": "Count"
       },
       "actions": {
         "close": "Close"

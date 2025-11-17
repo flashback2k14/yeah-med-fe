@@ -6,7 +6,7 @@ export type TableRow = {
   category: string;
   location: string;
   categoryColor: string;
-  count: string;
+  count: number | null;
   company: string;
   inUse: boolean;
   isExpired?: boolean;
@@ -34,6 +34,8 @@ export const createMedFormData = (
     category: '',
     description: '',
     productId: '',
+    company: '',
+    count: null,
     selectableCategories: categories,
     selectableLocations: locations,
     selectedCategories: new Array<string>(),
